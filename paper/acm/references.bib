@@ -1,0 +1,127 @@
+% references.bib -- EcomSafe course report
+%
+% Verification status (see ../../literature_review/peer_reviewed_core.md):
+%   Peer-reviewed core (counted; venue verified on official pages):
+%     russinovich2025crescendo, ren2025llms, mazeika2024harmbench,
+%     chao2024jailbreakbench, arditi2024refusal
+%   Non-core (not counted toward the peer-reviewed requirement):
+%     guida2026cognitive       -- arXiv preprint
+%     sheoran2026multiturnpsb  -- arXiv preprint
+%     li2026state              -- arXiv preprint; our notes list ICML 2026 (PMLR 306),
+%                                 but this venue was NOT independently verified
+%     zhou2024speak            -- arXiv preprint; only the surname "Zhou" is verified
+%     sheoran2026multiturnpsb  -- first-name initial "A" is dropped in the source PDF;
+%                                 "Anushka" is inferred
+%     guida2026cognitive, li2026state -- only author initials available in our copies
+%   Project proposal:
+%     koshal2026cart           -- unpublished course project proposal
+
+% ---------------------------------------------------------------------------
+% Peer-reviewed core
+% ---------------------------------------------------------------------------
+
+@inproceedings{russinovich2025crescendo,
+  author    = {Mark Russinovich and Ahmed Salem and Ronen Eldan},
+  title     = {Great, Now Write an Article About That: The {Crescendo} Multi-Turn {LLM} Jailbreak Attack},
+  booktitle = {34th USENIX Security Symposium (USENIX Security 25)},
+  pages     = {2421--2440},
+  year      = {2025},
+  publisher = {USENIX Association},
+  isbn      = {978-1-939133-52-6},
+  url       = {https://www.usenix.org/conference/usenixsecurity25/presentation/russinovich}
+}
+
+@inproceedings{ren2025llms,
+  author    = {Qibing Ren and Hao Li and Dongrui Liu and Zhanxu Xie and Xiaoya Lu and Yu Qiao and Lei Sha and Junchi Yan and Lizhuang Ma and Jing Shao},
+  title     = {{LLMs} know their vulnerabilities: Uncover Safety Gaps through Natural Distribution Shifts},
+  booktitle = {Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages     = {24763--24785},
+  year      = {2025},
+  publisher = {Association for Computational Linguistics},
+  doi       = {10.18653/v1/2025.acl-long.1207},
+  url       = {https://aclanthology.org/2025.acl-long.1207/}
+}
+
+@inproceedings{mazeika2024harmbench,
+  author    = {Mantas Mazeika and Long Phan and Xuwang Yin and Andy Zou and Zifan Wang and Norman Mu and Elham Sakhaee and Nathaniel Li and Steven Basart and Bo Li and David Forsyth and Dan Hendrycks},
+  title     = {{HarmBench}: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {235},
+  pages     = {35181--35224},
+  year      = {2024},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v235/mazeika24a.html}
+}
+
+@inproceedings{chao2024jailbreakbench,
+  author    = {Patrick Chao and Edoardo Debenedetti and Alexander Robey and Maksym Andriushchenko and Francesco Croce and Vikash Sehwag and Edgar Dobriban and Nicolas Flammarion and George J. Pappas and Florian Tram{\`e}r and Hamed Hassani and Eric Wong},
+  title     = {{JailbreakBench}: An Open Robustness Benchmark for Jailbreaking Large Language Models},
+  booktitle = {Advances in Neural Information Processing Systems 37 (NeurIPS 2024), Datasets and Benchmarks Track},
+  year      = {2024},
+  doi       = {10.52202/079017-1745},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2024/hash/63092d79154adebd7305dfd498cbff70-Abstract-Datasets_and_Benchmarks_Track.html}
+}
+
+@inproceedings{arditi2024refusal,
+  author    = {Andy Arditi and Oscar Obeso and Aaquib Syed and Daniel Paleka and Nina Panickssery and Wes Gurnee and Neel Nanda},
+  title     = {Refusal in Language Models Is Mediated by a Single Direction},
+  booktitle = {Advances in Neural Information Processing Systems 37 (NeurIPS 2024)},
+  year      = {2024},
+  doi       = {10.52202/079017-4322},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2024/hash/f545448535dfde4f9786555403ab7c49-Abstract-Conference.html}
+}
+
+% ---------------------------------------------------------------------------
+% Non-core preprints (not counted toward the peer-reviewed requirement)
+% ---------------------------------------------------------------------------
+
+@misc{guida2026cognitive,
+  author        = {M. Guida and R. Shikhhamzayev and S. Penchala and S. Iannucci and J. Li and S. Rahimi and N. {Amiri Golilarz}},
+  title         = {Cognitive Firewall: A Proactive, Zero-Trust, Multi-Gate Framework for {LLM} Safety},
+  year          = {2026},
+  eprint        = {2607.01277},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  note          = {arXiv preprint}
+}
+
+@misc{sheoran2026multiturnpsb,
+  author        = {Anushka Sheoran and Yiduo Hao},
+  title         = {{MultiTurnPSB}: Evaluating Multi-Turn Jailbreak Attacks and Classifier-Based Defenses for Medical {AI} Safety},
+  year          = {2026},
+  eprint        = {2606.02630},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  note          = {arXiv preprint}
+}
+
+@misc{li2026state,
+  author        = {P. Li and J. Zhang and T. Zhang and H. Qiu and K. Zhang and W. Zhang and N. Yu and W. Zhou},
+  title         = {State-Dependent Safety Failures in Multi-Turn Language Model Interaction},
+  year          = {2026},
+  eprint        = {2603.15684},
+  archivePrefix = {arXiv},
+  note          = {arXiv preprint}
+}
+
+@misc{zhou2024speak,
+  author        = {Zhou and others},
+  title         = {Speak Out of Turn: Safety Vulnerability of Large Language Models in Multi-turn Dialogue},
+  year          = {2024},
+  eprint        = {2402.17262},
+  archivePrefix = {arXiv},
+  note          = {arXiv preprint}
+}
+
+% ---------------------------------------------------------------------------
+% Project proposal
+% ---------------------------------------------------------------------------
+
+@unpublished{koshal2026cart,
+  author = {Jayash Koshal and Shanu Sushmita},
+  title  = {Cart Before the Harm: Multi-Turn Safety Detection in E-Commerce Conversational Agents},
+  month  = may,
+  year   = {2026},
+  note   = {Unpublished project manuscript, dated May 29, 2026}
+}
