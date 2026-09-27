@@ -14,21 +14,29 @@
 
 \title{Cart Before the Harm: Real-Time Safety Detection in E-Commerce Conversational Agents}
 
-\author{Jayash Koshal}
-\affiliation{%
-  \institution{Meta \& Northeastern University}
-  \city{Seattle}
-  \state{WA}}
-\email{j.koshal@northeastern.edu}
-
-\author{Shanu Sushmita}
+\author{Sohan Jayram Reddy Kadiri}
 \affiliation{%
   \institution{Northeastern University}
   \city{Seattle}
-  \state{WA}}
-\email{s.sushmita@northeastern.edu}
+  \state{WA}
+  \country{USA}}
+\email{kadiri.s@northeastern.edu}
 
-\renewcommand{\shortauthors}{Koshal and Sushmita}
+\author{Sanidhya Khandelwal}
+\affiliation{%
+  \institution{Northeastern University}
+  \city{Seattle}
+  \state{WA}
+  \country{USA}}
+
+\author{Rohan Raj}
+\affiliation{%
+  \institution{Northeastern University}
+  \city{Seattle}
+  \state{WA}
+  \country{USA}}
+
+\renewcommand{\shortauthors}{Kadiri, Khandelwal, and Raj}
 
 \begin{abstract}
 LLM-based shopping assistants operate under business constraints such as pricing logic, return policies, and regulatory guidelines. They are therefore exposed to \emph{commercial jailbreaks}: adversarial requests that target business rules rather than conventionally harmful content, including price manipulation, policy bypass, return fraud, competitor extraction, and regulatory bypass. Such attacks can unfold across multiple turns that each appear benign, which limits filters that judge messages in isolation. This report describes EcomSafe, a planned trajectory-aware detection approach for e-commerce conversational agents. EcomSafe combines a per-turn probe over model hidden states, which estimates commercial intent, with an incremental trajectory layer that summarizes risk through escalation-rate, running-mean, volatility, and rank-trend features. We do not claim that tracking risk across turns is new. Our question is whether this combination helps detect commercial jailbreaks early across product domains. We also specify EcomSafeBench, a planned benchmark of 3,900 annotated conversations across five product domains, together with its taxonomy, annotation schema, and evaluation plan. No experimental results are reported; the next step is a two-week pilot.
@@ -263,7 +271,7 @@ These labels support each planned metric~\cite{koshal2026cart}:
 \section{Plan for Next Weeks}
 \label{sec:plan}
 
-So far, the project consists of the proposal and the sections of this report. No code, data, or experiments exist yet. The next two-week cycle builds an end-to-end \emph{pilot} of the EcomSafe pipeline on a small EcomSafeBench subset, using Llama-3.2-3B-Instruct, the smaller proposed target model. Pilot numbers are sanity checks, not reportable results. Table~\ref{tab:plan} lists the milestones.
+So far, our project consists of the proposal and the sections of this report. No code, data, or experiments exist yet. The next two-week cycle builds an end-to-end \emph{pilot} of the EcomSafe pipeline on a small EcomSafeBench subset, using Llama-3.2-3B-Instruct, the smaller proposed target model. Pilot numbers are sanity checks, not reportable results. Table~\ref{tab:plan} lists the milestones.
 
 \begin{table*}[t]
   \caption{Milestones for the next two-week cycle. All items are planned; none has been completed.}
@@ -275,7 +283,7 @@ So far, the project consists of the proposal and the sections of this report. No
     \midrule
     1--2 & Repository and experiment setup & Repository layout (\texttt{data/}, \texttt{src/}, \texttt{configs/}, \texttt{results/}), pinned environment, and YAML config for model, seeds, and paths & A clean checkout installs and runs a smoke test that loads the model from config, with seeds fixed \\
     2--3 & Threat taxonomy implementation & Schema encoding the five attack types, three escalation patterns, five domains, five probe intents (PV/CD/FF/RB/CR), and annotation fields & Validator accepts valid examples and rejects malformed ones \\
-    3--6 & EcomSafeBench pilot & About 150 conversations: 50 commercial jailbreaks (all five types), 40 escalations (all three patterns), and 60 benign, across all five domains, with turn- and conversation-level labels & Every conversation passes schema validation; the authors manually review all 150 and log and fix problems \\
+    3--6 & EcomSafeBench pilot & About 150 conversations: 50 commercial jailbreaks (all five types), 40 escalations (all three patterns), and 60 benign, across all five domains, with turn- and conversation-level labels & Every conversation passes schema validation; the team manually reviews all 150 and logs and fixes problems \\
     5--8 & Baselines & Isolated per-turn classifier, keyword and output safety filter, sliding-window max-risk, and full-context classifier behind one scoring interface & Each baseline scores every pilot turn without errors \\
     6--10 & Hidden-state probe prototype & Hidden-state extraction (one or more layers per turn), a linear intent probe, and per-turn risk $r_t$ computed with the proposal's weighted intent formula & Five intent probabilities and $r_t$ are output per turn; probe accuracy on a conversation-grouped held-out split is reported with its sample size \\
     9--11 & Trajectory layer prototype & Trajectory features ($\Delta_t$, $\mu_t$, $\sigma_t$, $\tau_t$) and a simple sequence model $f_\theta$ with the proposal's OR-threshold intervention rule & Unit tests on synthetic risk sequences give the expected values, e.g., $\tau = 1$ on a strictly increasing sequence \\
@@ -297,6 +305,11 @@ So far, the project consists of the proposal and the sections of this report. No
 \label{sec:conclusion}
 
 E-commerce conversational agents must enforce business rules, not only avoid harmful content, and commercial jailbreaks may emerge gradually across turns that each appear benign. This report has framed that problem, reviewed the relevant multi-turn jailbreak, benchmarking, and representation literature, and specified a commercial threat taxonomy and the planned EcomSafeBench benchmark. EcomSafe's planned contribution is to test whether trajectory-aware detection over a hidden-state intent probe identifies commercial jailbreaks early across product domains, with acceptable false-positive rates and per-turn latency; trajectory-aware safety itself is prior work. No results are reported here. The immediate next step is a two-week pilot: a reproducible repository, an encoded annotation schema, about 150 pilot conversations, the four baselines, an initial linear probe, the trajectory features, and sanity checks of the planned metrics.
+
+\begin{acks}
+We thank Jayash Koshal and Shanu Sushmita of Northeastern University
+for their guidance and feedback throughout the EcomSafe project.
+\end{acks}
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}

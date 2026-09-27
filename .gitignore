@@ -2,11 +2,11 @@
 __pycache__/
 *.pyc
 
-# Local paper/source PDFs
+# Research papers kept locally
 papers/*.pdf
 papers/ocr/
 
-# LaTeX build artifacts
+# LaTeX build files
 *.aux
 *.bbl
 *.blg
