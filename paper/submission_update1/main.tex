@@ -1,15 +1,14 @@
-\documentclass[sigconf]{acmart}
+\documentclass[sigconf,nonacm]{acmart}
 
 %% ---------------------------------------------------------------------------
 %% Course project report (not an ACM conference submission).
-%% Suppress ACM copyright block, "ACM Reference Format" block, and all default
-%% conference metadata (e.g., the dummy "Conference'17" line) in the first-page
-%% footnote and the running headers.
+%% `nonacm` drops ACM conference metadata, copyright block, and reference
+%% format. The page style is also reset to plain after \maketitle (acmart
+%% re-applies its own header style there), so no running header is printed.
 %% ---------------------------------------------------------------------------
 \setcopyright{none}
 \settopmatter{printacmref=false}
 \renewcommand\footnotetextcopyrightpermission[1]{}
-\pagestyle{plain}
 
 %% Marks design elements that go beyond the original EcomSafe proposal.
 \newcommand{\ext}{\textbf{(proposed extension)}}
@@ -49,6 +48,16 @@ LLM-based shopping assistants operate under business constraints such as pricing
 \keywords{LLM safety, jailbreak detection, multi-turn dialogue, e-commerce, conversational agents}
 
 \maketitle
+%% acmart draws its running header from its own fancyhdr page style (and
+%% redefines `plain`), so define a neutral style: no header, page number only.
+\fancypagestyle{coursereport}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}}
+\pagestyle{coursereport}
+\thispagestyle{coursereport}
+\markboth{}{}
 
 \noindent\textbf{Project Repository:} \url{https://github.com/sohanreddyk/ecomsafe}
 
