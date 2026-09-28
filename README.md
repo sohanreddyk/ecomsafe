@@ -70,14 +70,20 @@ Planned evaluation:
 ```
 EcomSafe/
 ├── README.md
+├── requirements.txt         # Initial planned dependencies (versions to be pinned)
+├── src/                     # Scaffold: future probe, trajectory layer, baselines, evaluation
+├── configs/                 # Scaffold: future reproducible experiment configs
+├── data/                    # Scaffold: future EcomSafeBench pilot and benchmark data
+├── experiments/             # Scaffold: future pilot outputs and logs
 ├── paper/
-│   ├── acm/                 # ACM LaTeX report (main.tex, references.bib)
-│   └── *.md                 # Markdown drafts of report sections
+│   ├── acm/                 # Earlier ACM LaTeX draft
+│   ├── submission_update1/  # Project Update 1 submission report
+│   └── *.md                 # Report section drafts
 ├── literature_review/       # Literature notes, verified peer-reviewed core, gap analysis
 └── papers/                  # Source PDFs used for the literature review
 ```
 
-`data/`, `src/`, `configs/`, and `results/` will be added during the implementation phase.
+The repository is currently in the research and planning stage. The `src/`, `configs/`, `data/`, and `experiments/` directories contain only scaffold README files; implementation begins in the next cycle.
 
 ## Current Status
 
@@ -96,4 +102,4 @@ The next two-week cycle builds an end-to-end **pilot**:
 6. Implement the trajectory features and a simple sequence model.
 7. Compute all four metrics on held-out pilot conversations as sanity checks, not reportable results.
 
-The full report is in `paper/acm/main.tex`.
+The Project Update 1 report is in `paper/submission_update1/main.tex`.

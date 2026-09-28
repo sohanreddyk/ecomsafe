@@ -1,0 +1,10 @@
+# Initial dependencies planned for the EcomSafe pilot.
+# Versions will be pinned during the repository-setup milestone.
+torch
+transformers
+datasets
+scikit-learn
+numpy
+pandas
+scipy
+pyyaml
