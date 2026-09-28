@@ -15,3 +15,4 @@ papers/ocr/
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+.Rhistory
