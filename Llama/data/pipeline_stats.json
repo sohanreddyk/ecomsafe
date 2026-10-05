@@ -1,0 +1,68 @@
+{
+ "policy": {
+  "calls": 59,
+  "attempts": 126,
+  "json_failures": 26,
+  "kept_with_failures": 0,
+  "seconds": null,
+  "cached": 59,
+  "model": "meta-llama/Llama-3.2-3B-Instruct",
+  "clauses_kept": 158,
+  "dropped_failed_checks": 24,
+  "dropped_duplicates": 36,
+  "note": "recomputed from Llama/logs/policy.jsonl; wall time not recorded (about 70 min)"
+ },
+ "design": {
+  "weak_cells": [
+   "G-RB",
+   "Fin-CE"
+  ],
+  "moves_used_more_than_3": {
+   "request for an exception": 4,
+   "false premise": 4
+  },
+  "cells_with_failed_checks": [],
+  "calls": 25,
+  "attempts": 50,
+  "json_failures": 0,
+  "kept_with_failures": 0,
+  "seconds": 817.6,
+  "model": "meta-llama/Llama-3.2-3B-Instruct"
+ },
+ "generate": {
+  "slots_kept_with_failures": [
+   "E-CE-a",
+   "E-CE-b",
+   "P-PM-a",
+   "P-PB-a",
+   "P-RB-a",
+   "F-PM-a",
+   "F-CE-a",
+   "F-RB-a",
+   "G-RB-a"
+  ],
+  "calls": 50,
+  "attempts": 147,
+  "json_failures": 10,
+  "kept_with_failures": 10,
+  "seconds": 793.8,
+  "model": "meta-llama/Llama-3.2-3B-Instruct",
+  "note": "includes a rerun of 3 slots after dose/brand checks became hard limits"
+ },
+ "refs": {
+  "calls": 75,
+  "attempts": 80,
+  "json_failures": 0,
+  "kept_with_failures": 0,
+  "seconds": 557.3,
+  "model": "meta-llama/Llama-3.2-3B-Instruct"
+ },
+ "selfaudit": {
+  "calls": 75,
+  "attempts": 79,
+  "json_failures": 0,
+  "kept_with_failures": 0,
+  "seconds": 317.4,
+  "model": "meta-llama/Llama-3.2-3B-Instruct"
+ }
+}

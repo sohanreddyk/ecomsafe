@@ -8,3 +8,5 @@ numpy
 pandas
 scipy
 pyyaml
+sentence-transformers
+huggingface_hub

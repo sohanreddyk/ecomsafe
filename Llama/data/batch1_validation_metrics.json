@@ -1,0 +1,402 @@
+{
+  "distribution": {
+    "75 records": true,
+    "50 attacks / 25 benign": true,
+    "25 cells x 2 attacks": true,
+    "10 attacks per attack type": true,
+    "10 attacks per domain": true,
+    "25 benign in 25 distinct cells": true,
+    "5 benign per domain": true,
+    "5 benign per attack type": true,
+    "benign directly follows its paired attack": true,
+    "benign shares domain and clause with pair": true,
+    "unique IDs": true
+  },
+  "clause_coverage": {
+    "unresolved": [],
+    "distinct_clauses_used": 30
+  },
+  "near_duplicates": {
+    "threshold": 0.85,
+    "flagged": [],
+    "minimal_pair_sims": [
+      [
+        "ESB-B1-001",
+        "ESB-B1-051",
+        0.8835574984550476
+      ],
+      [
+        "ESB-B1-003",
+        "ESB-B1-052",
+        0.7707692384719849
+      ],
+      [
+        "ESB-B1-005",
+        "ESB-B1-053",
+        0.7525927424430847
+      ],
+      [
+        "ESB-B1-007",
+        "ESB-B1-054",
+        0.2310148924589157
+      ],
+      [
+        "ESB-B1-009",
+        "ESB-B1-055",
+        0.6937302350997925
+      ],
+      [
+        "ESB-B1-011",
+        "ESB-B1-056",
+        0.839346170425415
+      ],
+      [
+        "ESB-B1-013",
+        "ESB-B1-057",
+        0.8353557586669922
+      ],
+      [
+        "ESB-B1-015",
+        "ESB-B1-058",
+        0.9169524312019348
+      ],
+      [
+        "ESB-B1-017",
+        "ESB-B1-059",
+        0.9125515818595886
+      ],
+      [
+        "ESB-B1-019",
+        "ESB-B1-060",
+        0.514650285243988
+      ],
+      [
+        "ESB-B1-021",
+        "ESB-B1-061",
+        0.831112265586853
+      ],
+      [
+        "ESB-B1-023",
+        "ESB-B1-062",
+        0.8682380318641663
+      ],
+      [
+        "ESB-B1-025",
+        "ESB-B1-063",
+        0.6566718220710754
+      ],
+      [
+        "ESB-B1-027",
+        "ESB-B1-064",
+        0.9057095646858215
+      ],
+      [
+        "ESB-B1-029",
+        "ESB-B1-065",
+        0.7838636636734009
+      ],
+      [
+        "ESB-B1-031",
+        "ESB-B1-066",
+        0.8616373538970947
+      ],
+      [
+        "ESB-B1-033",
+        "ESB-B1-067",
+        0.861217200756073
+      ],
+      [
+        "ESB-B1-035",
+        "ESB-B1-068",
+        0.580930769443512
+      ],
+      [
+        "ESB-B1-037",
+        "ESB-B1-069",
+        0.8873360753059387
+      ],
+      [
+        "ESB-B1-039",
+        "ESB-B1-070",
+        0.7858072519302368
+      ],
+      [
+        "ESB-B1-041",
+        "ESB-B1-071",
+        0.4274435341358185
+      ],
+      [
+        "ESB-B1-043",
+        "ESB-B1-072",
+        0.7427337765693665
+      ],
+      [
+        "ESB-B1-045",
+        "ESB-B1-073",
+        0.8075721263885498
+      ],
+      [
+        "ESB-B1-047",
+        "ESB-B1-074",
+        0.8959870934486389
+      ],
+      [
+        "ESB-B1-049",
+        "ESB-B1-075",
+        0.6941699981689453
+      ]
+    ],
+    "max_non_pair": 0.8270080089569092
+  },
+  "register_parity": {
+    "n_tokens": {
+      "attack_mean": 28.04,
+      "attack_sd": 7.719469158020689,
+      "benign_mean": 24.64,
+      "benign_sd": 4.803470967262458,
+      "paired_attack_mean": 25.28,
+      "d": 0.49288482019875457,
+      "p": 0.06315798277138308,
+      "d_paired": 0.13474928490365573
+    },
+    "n_chars": {
+      "attack_mean": 149.12,
+      "attack_sd": 40.72638416735444,
+      "benign_mean": 130.84,
+      "benign_sd": 30.034258217353507,
+      "paired_attack_mean": 136.88,
+      "d": 0.48683541401173025,
+      "p": 0.07855698200780781,
+      "d_paired": 0.1968199531906877
+    },
+    "punct_density": {
+      "attack_mean": 0.09318929016981724,
+      "attack_sd": 0.0663195708627102,
+      "benign_mean": 0.08495804984489196,
+      "benign_sd": 0.056738839243501635,
+      "paired_attack_mean": 0.09899224523943378,
+      "d": 0.12997405960988556,
+      "p": 0.8043450420865037,
+      "d_paired": 0.22163612665040738
+    },
+    "typo_count": {
+      "attack_mean": 0.36,
+      "attack_sd": 0.59795570104161,
+      "benign_mean": 0.36,
+      "benign_sd": 0.5686240703077328,
+      "paired_attack_mean": 0.44,
+      "d": 0.0,
+      "p": 0.9167574161101436,
+      "d_paired": 0.13093073414159545
+    },
+    "typo_rate": {
+      "attack_mean": 0.014687041869548558,
+      "attack_sd": 0.024656572863681715,
+      "benign_mean": 0.015561568061568061,
+      "benign_sd": 0.024038160328420863,
+      "paired_attack_mean": 0.019391890152886317,
+      "d": -0.0357606517202443,
+      "p": 0.8633778784418509,
+      "d_paired": 0.14762409990417633
+    },
+    "ttr": {
+      "attack_mean": 0.8983495310224328,
+      "attack_sd": 0.06194067519446905,
+      "benign_mean": 0.9309267368379867,
+      "benign_sd": 0.054626311256081056,
+      "paired_attack_mean": 0.9127176565595582,
+      "d": -0.5462763997659614,
+      "p": 0.02806808424097589,
+      "d_paired": -0.3124619492061147
+    },
+    "mean_word_len": {
+      "attack_mean": 4.354714805734421,
+      "attack_sd": 0.5177543098494986,
+      "benign_mean": 4.3272328501344335,
+      "benign_sd": 0.5944967382955124,
+      "paired_attack_mean": 4.424005870200303,
+      "d": 0.050501575486227676,
+      "p": 0.946234915181618,
+      "d_paired": 0.16146518823553646
+    },
+    "lowercase_initial": {
+      "attack_mean": 0.4,
+      "attack_sd": 0.4948716593053935,
+      "benign_mean": 0.32,
+      "benign_sd": 0.47609522856952335,
+      "paired_attack_mean": 0.32,
+      "d": 0.16367342736586193,
+      "p": 0.5066902876477215,
+      "d_paired": 0.0
+    },
+    "uppercase_ratio": {
+      "attack_mean": 0.01684279548239093,
+      "attack_sd": 0.018537230109027924,
+      "benign_mean": 0.017478790016022358,
+      "benign_sd": 0.015895130970347983,
+      "paired_attack_mean": 0.018685372344298838,
+      "d": -0.035907276288325976,
+      "p": 0.6989848602854891,
+      "d_paired": 0.06919884860550553
+    },
+    "n_sentences": {
+      "attack_mean": 1.18,
+      "attack_sd": 0.43752550946038726,
+      "benign_mean": 1.12,
+      "benign_sd": 0.33166247903554,
+      "paired_attack_mean": 1.12,
+      "d": 0.1478633177367295,
+      "p": 0.6338252227619958,
+      "d_paired": 0.0
+    },
+    "n_question": {
+      "attack_mean": 0.46,
+      "attack_sd": 0.6455499158682859,
+      "benign_mean": 0.44,
+      "benign_sd": 0.5066228051190221,
+      "paired_attack_mean": 0.4,
+      "d": 0.03314468816642212,
+      "p": 0.8448682367053928,
+      "d_paired": -0.07364596943186583
+    },
+    "n_exclaim": {
+      "attack_mean": 0.0,
+      "attack_sd": 0.0,
+      "benign_mean": 0.0,
+      "benign_sd": 0.0,
+      "paired_attack_mean": 0.0,
+      "d": 0.0,
+      "p": NaN,
+      "d_paired": 0.0
+    },
+    "ends_with_punct": {
+      "attack_mean": 0.8,
+      "attack_sd": 0.4040610178208843,
+      "benign_mean": 0.8,
+      "benign_sd": 0.4082482904638631,
+      "paired_attack_mean": 0.8,
+      "d": 0.0,
+      "p": 1.0,
+      "d_paired": 0.0
+    }
+  },
+  "pair_register": {
+    "mismatched": [
+      "ESB-B1-057",
+      "ESB-B1-061"
+    ],
+    "speech_acts": {
+      "D/D": 12,
+      "Q/Q": 7,
+      "Q/D": 2,
+      "D/Q": 4
+    },
+    "question_share_attack": 0.38,
+    "question_share_benign": 0.44
+  },
+  "style_leak_grouped": [
+    {
+      "label": "paired 25v25, all surface features",
+      "n": 50,
+      "balanced_acc_mean": 0.556,
+      "balanced_acc_sd": 0.1321514282934543,
+      "auc_mean": 0.5748,
+      "auc_sd": 0.13759709299254835,
+      "perm_null_95th": 0.62,
+      "perm_p": 0.5294705294705294
+    },
+    {
+      "label": "paired 25v25, surface measures only",
+      "n": 50,
+      "balanced_acc_mean": 0.499,
+      "balanced_acc_sd": 0.12449497981846494,
+      "auc_mean": 0.4988000000000001,
+      "auc_sd": 0.1284311488697349,
+      "perm_null_95th": 0.6,
+      "perm_p": 0.8631368631368631
+    },
+    {
+      "label": "paired 25v25, function words only",
+      "n": 50,
+      "balanced_acc_mean": 0.5539999999999999,
+      "balanced_acc_sd": 0.1344767637921139,
+      "auc_mean": 0.5824,
+      "auc_sd": 0.15266381365602,
+      "perm_null_95th": 0.62,
+      "perm_p": 0.3196803196803197
+    }
+  ],
+  "style_leak": {
+    "full": {
+      "label": "all 75 (50 attack / 25 benign)",
+      "n": 75,
+      "n_pos": 25,
+      "majority_baseline_acc": 0.6666666666666667,
+      "accuracy_mean": 0.6166666666666667,
+      "accuracy_sd": 0.09539392014169457,
+      "balanced_acc_mean": 0.564,
+      "balanced_acc_sd": 0.10979070998950685,
+      "auc_mean": 0.5948,
+      "auc_sd": 0.1337645692999458,
+      "perm_balanced_acc": 0.51,
+      "perm_null_mean": 0.49763999999999997,
+      "perm_null_95th": 0.6199999999999999,
+      "perm_p": 0.44255744255744256
+    },
+    "balanced": {
+      "label": "25 benign vs their 25 paired attacks",
+      "n": 50,
+      "n_pos": 25,
+      "majority_baseline_acc": 0.5,
+      "accuracy_mean": 0.44099999999999995,
+      "accuracy_sd": 0.12968808734806755,
+      "balanced_acc_mean": 0.441,
+      "balanced_acc_sd": 0.12968808734806755,
+      "auc_mean": 0.4164,
+      "auc_sd": 0.1563682832290487,
+      "perm_balanced_acc": 0.44000000000000006,
+      "perm_null_mean": 0.49784,
+      "perm_null_95th": 0.64,
+      "perm_p": 0.7842157842157842
+    },
+    "paired_surface_only": {
+      "label": "paired 25v25, surface measures only",
+      "n": 50,
+      "n_pos": 25,
+      "majority_baseline_acc": 0.5,
+      "accuracy_mean": 0.32899999999999996,
+      "accuracy_sd": 0.12672410978184065,
+      "balanced_acc_mean": 0.32899999999999996,
+      "balanced_acc_sd": 0.12672410978184065,
+      "auc_mean": 0.26799999999999996,
+      "auc_sd": 0.133086438076913,
+      "perm_balanced_acc": 0.3,
+      "perm_null_mean": 0.4907,
+      "perm_null_95th": 0.6399999999999999,
+      "perm_p": 0.991008991008991
+    },
+    "paired_function_words_only": {
+      "label": "paired 25v25, function words only",
+      "n": 50,
+      "n_pos": 25,
+      "majority_baseline_acc": 0.5,
+      "accuracy_mean": 0.49599999999999994,
+      "accuracy_sd": 0.14136477637657832,
+      "balanced_acc_mean": 0.49599999999999994,
+      "balanced_acc_sd": 0.14136477637657832,
+      "auc_mean": 0.4732000000000001,
+      "auc_sd": 0.15748574538668572,
+      "perm_balanced_acc": 0.45999999999999996,
+      "perm_null_mean": 0.50488,
+      "perm_null_95th": 0.6409999999999992,
+      "perm_p": 0.7432567432567433
+    }
+  },
+  "distinct2": {
+    "attack_all_50": 0.7413793103448276,
+    "benign": 0.7890222984562607,
+    "attack_resampled_mean": 0.8164441443269543,
+    "attack_resampled_sd": 0.017207306847696877,
+    "paired_attacks": 0.8297161936560935
+  }
+}

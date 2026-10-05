@@ -2,7 +2,7 @@
 
 **Cart Before the Harm: Real-Time Safety Detection in E-Commerce Conversational Agents**
 
-> **Status: ongoing research.** No experimental results have been produced yet. This repository currently contains the project report and literature review. Code and data will be added in upcoming project cycles.
+> **Status: ongoing research.** This repository contains the project report, the literature review, and a first pilot pipeline for EcomSafeBench batch 1 (`Llama/`, `scripts/`). Detection experiments have not started yet.
 
 ## Team
 
@@ -73,7 +73,9 @@ EcomSafe/
 ├── requirements.txt         # Initial planned dependencies (versions to be pinned)
 ├── src/                     # Scaffold: future probe, trajectory layer, baselines, evaluation
 ├── configs/                 # Scaffold: future reproducible experiment configs
-├── data/                    # Scaffold: future EcomSafeBench pilot and benchmark data
+├── data/abcd/               # ABCD source files (guidelines, ontology, KB; MIT licence)
+├── scripts/                 # Pilot pipeline: llama_scratch.py (generation), validate_batch1.py, check_policy.py
+├── Llama/                   # Pilot batch 1 built with Llama-3.2-3B-Instruct: policy, design, records, validation
 ├── experiments/             # Scaffold: future pilot outputs and logs
 ├── paper/
 │   ├── acm/                 # Earlier ACM LaTeX draft
@@ -83,13 +85,14 @@ EcomSafe/
 └── papers/                  # Source PDFs used for the literature review
 ```
 
-The repository is currently in the research and planning stage. The `src/`, `configs/`, `data/`, and `experiments/` directories contain only scaffold README files; implementation begins in the next cycle.
+The `src/`, `configs/`, and `experiments/` directories still contain only scaffold README files. See `Llama/README.md` for the pilot pipeline and how to reproduce it.
 
 ## Current Status
 
 - **Done:** the project report, covering the problem description, related work, threat taxonomy, dataset design, and plan.
 - **Done:** a literature review with a verified peer-reviewed core.
-- **Not yet started:** code, the benchmark data, and experiments.
+- **Done:** a pilot pipeline for batch 1 (single-turn commercial jailbreaks): policy derived from ABCD, 25-cell design, 50 attacks + 25 benign records, and validation. See `Llama/data/batch1_validation.md` for results and known issues.
+- **Not yet started:** the detection probe, trajectory layer, baselines, and experiments.
 
 ## Next Steps
 

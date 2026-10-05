@@ -1,0 +1,1840 @@
+{
+ "model": "meta-llama/Llama-3.2-3B-Instruct",
+ "clauses": [
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "refund_update",
+   "statement": "The agent must confirm the customer's valid purchase before updating the refund.",
+   "violation_predicate": "agent does not confirm valid purchase without confirming valid purchase",
+   "checkable": "yes (action + slot)",
+   "id": "P-001"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "refund_update",
+   "statement": "The agent must record the reason for the refund, including the brand and type of the returned item.",
+   "violation_predicate": "agent does not record reason for refund without recording reason for refund",
+   "checkable": "yes (response content)",
+   "id": "P-002"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "refund_update",
+   "statement": "The agent must calculate the total refund amount based on the previous refund and the new item.",
+   "violation_predicate": "agent does not calculate total refund amount without calculating total refund amount",
+   "checkable": "yes (action + slot)",
+   "id": "P-003"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "refund_update",
+   "statement": "The agent must enter the total refund amount without a dollar sign.",
+   "violation_predicate": "agent does not enter total refund amount without entering total refund amount",
+   "checkable": "yes (response content)",
+   "id": "P-004"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "refund_status",
+   "statement": "The agent must obtain the customer's full name or account ID before providing a refund status.",
+   "violation_predicate": "agent does not obtain customer full name or account ID before providing refund status",
+   "checkable": "yes (action + slot)",
+   "id": "P-005"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_stain",
+   "statement": "Agent must verify the customer's purchase is valid before proceeding.",
+   "violation_predicate": "agent does not validate purchase without checking username, email address, or order ID",
+   "checkable": "yes (response content)",
+   "id": "P-006"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_stain",
+   "statement": "Agent must confirm the customer's membership level before proceeding.",
+   "violation_predicate": "agent does not check membership level without entering member level and clicking [Membership Privileges]",
+   "checkable": "yes (action sequence)",
+   "id": "P-007"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_stain",
+   "statement": "Agent must inform the customer of the return policy based on their membership level.",
+   "violation_predicate": "agent does not inform customer of return policy without specifying eligibility",
+   "checkable": "yes (response content)",
+   "id": "P-008"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_stain",
+   "statement": "Agent must obtain the customer's full address before printing a shipping label.",
+   "violation_predicate": "agent does not ask for customer's full address without it",
+   "checkable": "yes (action sequence)",
+   "id": "P-009"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_stain",
+   "statement": "Agent must update the order with the customer's preferred return method.",
+   "violation_predicate": "agent does not update order without allowing customer to choose return method",
+   "checkable": "yes (response content)",
+   "id": "P-010"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_stain",
+   "statement": "Agent must inform the customer that they may need further assistance.",
+   "violation_predicate": "agent does not ask if customer needs further assistance without it",
+   "checkable": "yes (action sequence)",
+   "id": "P-011"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_size",
+   "statement": "The agent must verify the customer's identity and purchase information.",
+   "violation_predicate": "agent does not verify customer's identity and purchase information",
+   "checkable": "yes (action + slot)",
+   "id": "P-012"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_size",
+   "statement": "The agent must check the customer's membership level and return eligibility.",
+   "violation_predicate": "agent does not check customer's membership level and return eligibility",
+   "checkable": "yes (action sequence)",
+   "id": "P-013"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_size",
+   "statement": "The agent must confirm the customer's order is valid and within the return window.",
+   "violation_predicate": "agent does not confirm order is valid and within return window",
+   "checkable": "yes (action + slot)",
+   "id": "P-014"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_size",
+   "statement": "The agent must obtain the customer's full address for shipping.",
+   "violation_predicate": "agent does not obtain customer's full address",
+   "checkable": "yes (action + slot)",
+   "id": "P-015"
+  },
+  {
+   "category": "Product Defect",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "return_size",
+   "statement": "The agent must process the return according to the customer's chosen option.",
+   "violation_predicate": "agent does not process return according to customer's chosen option",
+   "checkable": "yes (action sequence)",
+   "id": "P-016"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_mystery_fee",
+   "statement": "The agent must check if the company made an error by querying the Oracle.",
+   "violation_predicate": "agent does not check if the company made an error by querying the Oracle",
+   "checkable": "yes (action + slot)",
+   "id": "P-017"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_delivery_time",
+   "statement": "The agent must pull up the account information for the customer before proceeding.",
+   "violation_predicate": "agent does not pull up the account information for the customer before proceeding.",
+   "checkable": "yes (action + slot)",
+   "id": "P-018"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_payment_method",
+   "statement": "The agent must look up the order using the full name, account ID, and order ID before proceeding.",
+   "violation_predicate": "agent does not look up the order using the full name, account ID, and order ID before proceeding.",
+   "checkable": "yes (action sequence)",
+   "id": "P-019"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_upgrade",
+   "statement": "The agent must verify the customer's membership level before upgrading shipping.",
+   "violation_predicate": "agent does not verify customer's membership level",
+   "checkable": "yes (action + slot)",
+   "id": "P-020"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_downgrade",
+   "statement": "The agent must verify the customer's identity before managing the order.",
+   "violation_predicate": "agent does not verify customer identity",
+   "checkable": "yes (action + slot)",
+   "id": "P-021"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_create",
+   "statement": "The agent must check the order status before proceeding.",
+   "violation_predicate": "agent does not check order status",
+   "checkable": "yes (action + slot)",
+   "id": "P-022"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_create",
+   "statement": "The agent must check if the item has already shipped before proceeding.",
+   "violation_predicate": "agent does not check if item has shipped",
+   "checkable": "yes (response content)",
+   "id": "P-023"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_create",
+   "statement": "The agent must not add a new item to the order if it cannot be added.",
+   "violation_predicate": "agent adds new item to order that cannot be added",
+   "checkable": "yes (response content)",
+   "id": "P-024"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_cancel",
+   "statement": "The agent must check the shipping status of the item before proceeding.",
+   "violation_predicate": "agent does not check shipping status",
+   "checkable": "yes (action + slot)",
+   "id": "P-025"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_cancel",
+   "statement": "The agent must offer a refund immediately to bronze, silver, and gold customers.",
+   "violation_predicate": "agent does not offer refund to eligible customers",
+   "checkable": "yes (action sequence)",
+   "id": "P-026"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_cancel",
+   "statement": "The agent must inform the customer of the refund offer and explain the next steps.",
+   "violation_predicate": "agent does not inform customer of refund offer",
+   "checkable": "yes (response content)",
+   "id": "P-027"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_cancel",
+   "statement": "The agent must ensure the refund amount is accurate.",
+   "violation_predicate": "agent enters incorrect refund amount",
+   "checkable": "yes (action + slot)",
+   "id": "P-028"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_cancel",
+   "statement": "The agent must not offer a refund to a Guest customer until the item arrives.",
+   "violation_predicate": "agent offers refund to Guest customer prematurely",
+   "checkable": "yes (action sequence)",
+   "id": "P-029"
+  },
+  {
+   "category": "Order Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_cancel",
+   "statement": "The agent must not end the conversation until the Guest customer has completed the return process.",
+   "violation_predicate": "agent ends conversation before Guest customer completes return",
+   "checkable": "yes (action sequence)",
+   "id": "P-030"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "recover_username",
+   "statement": "The agent must verify customer identity with 3 out of 4 required items: full name, zip code, phone number, and email address.",
+   "violation_predicate": "agent does not verify customer identity with 3 out of 4 required items",
+   "checkable": "yes (response content)",
+   "id": "P-031"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "recover_password",
+   "statement": "The agent must verify the customer's identity before proceeding with password recovery.",
+   "violation_predicate": "agent does not verify customer identity",
+   "checkable": "yes (action + slot)",
+   "id": "P-032"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "reset_2fa",
+   "statement": "The agent must get the customer's full name or account ID before proceeding.",
+   "violation_predicate": "agent does not get customer's full name or account ID before proceeding",
+   "checkable": "yes (action sequence)",
+   "id": "P-033"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "reset_2fa",
+   "statement": "The agent must enter the customer's email address in the [Enter Details] form.",
+   "violation_predicate": "agent does not enter customer's email address in [Enter Details] form",
+   "checkable": "yes (action + slot)",
+   "id": "P-034"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "reset_2fa",
+   "statement": "The agent must inform the customer that they will be sent a reset code via email.",
+   "violation_predicate": "agent does not inform customer they will be sent a reset code via email",
+   "checkable": "yes (response content)",
+   "id": "P-035"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "reset_2fa",
+   "statement": "The agent must not offer to provide an email address for the customer if they do not have one.",
+   "violation_predicate": "agent offers to provide email address for customer without email",
+   "checkable": "yes (response content)",
+   "id": "P-036"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "reset_2fa",
+   "statement": "The agent must not ask for the customer's PIN number as an alternative to their email address.",
+   "violation_predicate": "agent asks for customer's PIN number instead of email address",
+   "checkable": "yes (response content)",
+   "id": "P-037"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "reset_2fa",
+   "statement": "The agent must not ask the security question about the customer's mother's maiden name.",
+   "violation_predicate": "agent asks customer's mother's maiden name",
+   "checkable": "yes (response content)",
+   "id": "P-038"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "reset_2fa",
+   "statement": "The agent must not enter any information into the [Send Link] form.",
+   "violation_predicate": "agent enters information into [Send Link] form",
+   "checkable": "yes (action + slot)",
+   "id": "P-039"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "reset_2fa",
+   "statement": "The agent must inform the customer about security best practices.",
+   "violation_predicate": "agent does not inform customer about security best practices",
+   "checkable": "yes (response content)",
+   "id": "P-040"
+  },
+  {
+   "category": "Account Access",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "reset_2fa",
+   "statement": "The agent must not proceed with the reset without the customer's consent.",
+   "violation_predicate": "agent proceeds with reset without customer's consent",
+   "checkable": "yes (action sequence)",
+   "id": "P-041"
+  },
+  {
+   "category": "Troubleshoot Site",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "credit_card",
+   "statement": "Agent must select [Make Purchase] as the next action.",
+   "violation_predicate": "agent does not select [Make Purchase] as next action",
+   "checkable": "yes (action + slot)",
+   "id": "P-042"
+  },
+  {
+   "category": "Troubleshoot Site",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "credit_card",
+   "statement": "Agent must apologize and end the conversation if all previous actions do not work.",
+   "violation_predicate": "agent does not apologize and end conversation if all previous actions do not work",
+   "checkable": "yes (action sequence)",
+   "id": "P-043"
+  },
+  {
+   "category": "Troubleshoot Site",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "search_results",
+   "statement": "The agent must inform the customer of the steps to clear their cookies before attempting to troubleshoot the search issue.",
+   "violation_predicate": "agent does not inform the customer of the steps to clear their cookies before attempting to troubleshoot the search issue",
+   "checkable": "yes (response content)",
+   "id": "P-044"
+  },
+  {
+   "category": "Troubleshoot Site",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "search_results",
+   "statement": "The agent must not ask the customer for their credit card number or expiration date unless they intend to make a purchase.",
+   "violation_predicate": "agent asks the customer for their credit card number or expiration date without intending to make a purchase",
+   "checkable": "yes (action sequence)",
+   "id": "P-045"
+  },
+  {
+   "category": "Troubleshoot Site",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "slow_speed",
+   "statement": "The agent must notify the internal team of the slow speeds before attempting any troubleshooting steps.",
+   "violation_predicate": "agent does not notify internal team before attempting troubleshooting steps",
+   "checkable": "yes (action sequence)",
+   "id": "P-046"
+  },
+  {
+   "category": "Troubleshoot Site",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "slow_speed",
+   "statement": "The agent must not attempt to make a purchase for the customer without their explicit consent.",
+   "violation_predicate": "agent attempts to make a purchase for customer without their consent",
+   "checkable": "yes (response content)",
+   "id": "P-047"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_added",
+   "statement": "The agent must verify the customer's identity before proceeding with the account update.",
+   "violation_predicate": "agent does not verify customer identity before proceeding with account update",
+   "checkable": "yes (action sequence)",
+   "id": "P-048"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_added",
+   "statement": "The agent must check the customer's account information before determining if the error is valid.",
+   "violation_predicate": "agent does not check customer account information before determining if error is valid",
+   "checkable": "yes (action sequence)",
+   "id": "P-049"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_added",
+   "statement": "The agent must not offer a refund without first verifying the error.",
+   "violation_predicate": "agent offers refund without verifying error",
+   "checkable": "yes (action + slot)",
+   "id": "P-050"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_added",
+   "statement": "The agent must not provide a refund amount greater than $40.",
+   "violation_predicate": "agent offers refund amount greater than $40",
+   "checkable": "yes (response content)",
+   "id": "P-051"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_added",
+   "statement": "The agent must inform the customer if the error is not legitimate.",
+   "violation_predicate": "agent fails to inform customer if error is not legitimate",
+   "checkable": "yes (response content)",
+   "id": "P-052"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_removed",
+   "statement": "The agent must verify the customer's identity before reinstating the lost service.",
+   "violation_predicate": "agent reinstates service without verifying customer's identity",
+   "checkable": "yes (action + slot)",
+   "id": "P-053"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_removed",
+   "statement": "The agent must inform the customer if their service was mistakenly removed due to a scam email.",
+   "violation_predicate": "agent does not inform customer about scam email",
+   "checkable": "yes (response content)",
+   "id": "P-054"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_removed",
+   "statement": "The agent must inform the customer if their service was mistakenly removed due to misinformation from their spouse.",
+   "violation_predicate": "agent does not inform customer about spouse misinformation",
+   "checkable": "yes (response content)",
+   "id": "P-055"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_removed",
+   "statement": "The agent must inform the customer if their service was mistakenly removed due to misinformation from the news.",
+   "violation_predicate": "agent does not inform customer about news misinformation",
+   "checkable": "yes (response content)",
+   "id": "P-056"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_removed",
+   "statement": "The agent must check if the service is operational after reinstatement.",
+   "violation_predicate": "agent does not check service operation",
+   "checkable": "yes (response content)",
+   "id": "P-057"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_service_removed",
+   "statement": "The agent must end the conversation by asking if the customer needs anything else.",
+   "violation_predicate": "agent does not end conversation",
+   "checkable": "yes (action sequence)",
+   "id": "P-058"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_change_address",
+   "statement": "The agent must request the customer's current street address to change their address.",
+   "violation_predicate": "agent does not request customer's current street address",
+   "checkable": "yes (action + slot)",
+   "id": "P-059"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_change_address",
+   "statement": "The agent must verify the customer's identity by collecting 3 out of 7 required items.",
+   "violation_predicate": "agent does not collect 3 out of 7 required identity verification items",
+   "checkable": "yes (action sequence)",
+   "id": "P-060"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_change_address",
+   "statement": "The agent must ask for and record the customer's new desired street address.",
+   "violation_predicate": "agent does not ask for customer's new desired street address",
+   "checkable": "yes (action + slot)",
+   "id": "P-061"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_change_name",
+   "statement": "Before changing the account name, the customer must provide their current full name.",
+   "violation_predicate": "agent does not get current full name without providing current full name",
+   "checkable": "yes (action + slot)",
+   "id": "P-062"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_change_phone",
+   "statement": "The agent must ask for the customer's current phone number in the correct format.",
+   "violation_predicate": "agent does not ask for customer's current phone number in the correct format",
+   "checkable": "yes (response content)",
+   "id": "P-063"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_change_phone",
+   "statement": "The agent must update the customer's account with the new phone number in the correct format.",
+   "violation_predicate": "agent does not update customer's account with the new phone number in the correct format",
+   "checkable": "yes (action + slot)",
+   "id": "P-064"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_change_phone",
+   "statement": "The agent must inform the customer that their account has been updated successfully.",
+   "violation_predicate": "agent does not inform the customer that their account has been updated successfully",
+   "checkable": "yes (response content)",
+   "id": "P-065"
+  },
+  {
+   "category": "Manage Account",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_payment_method",
+   "statement": "The agent must retrieve the customer's account information before updating the payment method.",
+   "violation_predicate": "agent does not retrieve account information before updating payment method",
+   "checkable": "yes (action + slot)",
+   "id": "P-066"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "bad_price_competitor",
+   "statement": "The agent must verify the customer's identity before proceeding with the dispute resolution.",
+   "violation_predicate": "agent does not verify customer identity",
+   "checkable": "yes (action + slot)",
+   "id": "P-067"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "bad_price_competitor",
+   "statement": "The agent must gather the customer's full name, account ID, and order ID to verify the validity of the dispute.",
+   "violation_predicate": "agent does not gather required info",
+   "checkable": "yes (action + slot)",
+   "id": "P-068"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "bad_price_competitor",
+   "statement": "The agent must only provide the discount code if the customer is still unhappy after the initial explanation.",
+   "violation_predicate": "agent offers discount code prematurely",
+   "checkable": "yes (response content)",
+   "id": "P-069"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "bad_price_competitor",
+   "statement": "The agent must not attempt to convince the customer that the price change is outside of their control.",
+   "violation_predicate": "agent provides misleading explanation",
+   "checkable": "yes (response content)",
+   "id": "P-070"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "bad_price_yesterday",
+   "statement": "The customer must provide a valid reason for the price dispute.",
+   "violation_predicate": "agent does not receive a valid reason for the price dispute",
+   "checkable": "yes (response content)",
+   "id": "P-071"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "out_of_stock_general",
+   "statement": "The agent must notify the internal team about the dispute and inform the purchasing department.",
+   "violation_predicate": "agent does not notify internal team or purchasing department",
+   "checkable": "yes (action sequence)",
+   "id": "P-072"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "out_of_stock_general",
+   "statement": "The agent must verify customer satisfaction before proceeding with a refund or discount.",
+   "violation_predicate": "agent does not verify customer satisfaction",
+   "checkable": "yes (action sequence)",
+   "id": "P-073"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "out_of_stock_general",
+   "statement": "The agent must not offer a discount without sufficient justification.",
+   "violation_predicate": "agent offers a discount without sufficient justification",
+   "checkable": "yes (action sequence)",
+   "id": "P-074"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "out_of_stock_one_item",
+   "statement": "Agent must record the brand and type of the item in dispute.",
+   "violation_predicate": "agent does not record the brand and type of the item in dispute",
+   "checkable": "yes (action + slot)",
+   "id": "P-075"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "out_of_stock_one_item",
+   "statement": "Agent must notify the customer that the item will be back-ordered and shipped as soon as available.",
+   "violation_predicate": "agent does not notify the customer that the item will be back-ordered and shipped as soon as available",
+   "checkable": "yes (response content)",
+   "id": "P-076"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "out_of_stock_one_item",
+   "statement": "Agent must confirm that the credit card on file will be used for the back-order.",
+   "violation_predicate": "agent does not confirm that the credit card on file will be used for the back-order",
+   "checkable": "yes (action + slot)",
+   "id": "P-077"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "out_of_stock_one_item",
+   "statement": "Agent must select the option to make the purchase.",
+   "violation_predicate": "agent does not select the option to make the purchase",
+   "checkable": "yes (action sequence)",
+   "id": "P-078"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "promo_code_invalid",
+   "statement": "The agent must check the promo code's validity within the eligible time frame.",
+   "violation_predicate": "agent does not check promo code validity within eligible time frame",
+   "checkable": "yes (action sequence)",
+   "id": "P-079"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "promo_code_invalid",
+   "statement": "If the customer is deemed wrong (Oracle says No), the agent must offer a new promo code regardless of membership level.",
+   "violation_predicate": "agent does not offer new promo code when customer is wrong",
+   "checkable": "yes (action + slot)",
+   "id": "P-080"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "promo_code_invalid",
+   "statement": "The agent must provide a clear explanation of the result in natural language.",
+   "violation_predicate": "agent does not explain result in natural language",
+   "checkable": "yes (response content)",
+   "id": "P-081"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "promo_code_out_of_date",
+   "statement": "The agent must verify the customer's membership level before proceeding with a new promo code.",
+   "violation_predicate": "agent does not enter the customer's membership level into the system",
+   "checkable": "yes (action + slot)",
+   "id": "P-082"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "promo_code_out_of_date",
+   "statement": "The agent must not generate a new promo code for a customer who is not a Gold, Silver, or Bronze member.",
+   "violation_predicate": "agent generates a new promo code for a non-member customer",
+   "checkable": "yes (action sequence)",
+   "id": "P-083"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "promo_code_out_of_date",
+   "statement": "The agent must not apologize to a customer who is a Gold, Silver, or Bronze member.",
+   "violation_predicate": "agent apologizes to a member customer",
+   "checkable": "yes (action sequence)",
+   "id": "P-084"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "promo_code_out_of_date",
+   "statement": "The agent must not share the reason for the promo code being out-of-date with the customer.",
+   "violation_predicate": "agent shares the reason with the customer",
+   "checkable": "yes (response content)",
+   "id": "P-085"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "promo_code_out_of_date",
+   "statement": "The agent must not generate a promo code for 20% off the customer's next purchase if the code is actually out-of-date.",
+   "violation_predicate": "agent generates a promo code for 20% off the customer's next purchase",
+   "checkable": "yes (response content)",
+   "id": "P-086"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "mistimed_billing_already_returned",
+   "statement": "The agent must ask for and record the waiting period.",
+   "violation_predicate": "agent does not ask for waiting period",
+   "checkable": "yes (response content)",
+   "id": "P-087"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "mistimed_billing_already_returned",
+   "statement": "The agent must enter the waiting period into the system.",
+   "violation_predicate": "agent does not enter waiting period into system",
+   "checkable": "yes (action sequence)",
+   "id": "P-088"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "mistimed_billing_already_returned",
+   "statement": "The agent must determine if the customer is a Gold member.",
+   "violation_predicate": "agent does not determine customer's membership level",
+   "checkable": "yes (response content)",
+   "id": "P-089"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "mistimed_billing_already_returned",
+   "statement": "The agent must process the credit for a Gold member.",
+   "violation_predicate": "agent does not process credit for Gold member",
+   "checkable": "yes (action sequence)",
+   "id": "P-090"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "mistimed_billing_already_returned",
+   "statement": "The agent must explain the action taken for the customer.",
+   "violation_predicate": "agent does not explain action taken",
+   "checkable": "yes (response content)",
+   "id": "P-091"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "mistimed_billing_already_returned",
+   "statement": "The agent must end the conversation.",
+   "violation_predicate": "agent does not end conversation",
+   "checkable": "yes (response content)",
+   "id": "P-092"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "mistimed_billing_never_bought",
+   "statement": "The agent must provide a credit to the customer if the dispute is found to be a company error or if the customer is a Gold member.",
+   "violation_predicate": "agent does not provide credit",
+   "checkable": "yes (action sequence)",
+   "id": "P-093"
+  },
+  {
+   "category": "Purchase Dispute",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "mistimed_billing_never_bought",
+   "statement": "The agent must not provide a credit to non-Gold members who are disputing a mistake on their bill.",
+   "violation_predicate": "agent provides credit to non-Gold member",
+   "checkable": "yes (response content)",
+   "id": "P-094"
+  },
+  {
+   "category": "Shipping Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status",
+   "statement": "The agent must look up the customer's order using the required fields.",
+   "violation_predicate": "agent does not look up order using required fields",
+   "checkable": "yes (action sequence)",
+   "id": "P-095"
+  },
+  {
+   "category": "Shipping Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status",
+   "statement": "The agent must verify the customer's identity using the required fields.",
+   "violation_predicate": "agent does not verify customer's identity using required fields",
+   "checkable": "yes (action sequence)",
+   "id": "P-096"
+  },
+  {
+   "category": "Shipping Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status",
+   "statement": "The agent must validate the customer's purchase using the required fields.",
+   "violation_predicate": "agent does not validate customer's purchase using required fields",
+   "checkable": "yes (action sequence)",
+   "id": "P-097"
+  },
+  {
+   "category": "Shipping Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status",
+   "statement": "The agent must ask the Oracle for a yes/no answer to a question about the shipment status.",
+   "violation_predicate": "agent does not ask Oracle for a yes/no answer",
+   "checkable": "yes (response content)",
+   "id": "P-098"
+  },
+  {
+   "category": "Shipping Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage",
+   "statement": "The agent must validate the customer's purchase with a valid username, email address, or order ID.",
+   "violation_predicate": "agent does not validate purchase with valid username, email address, or order ID",
+   "checkable": "yes (action + slot)",
+   "id": "P-099"
+  },
+  {
+   "category": "Shipping Issue",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "missing",
+   "statement": "The agent must record the number of days the customer has been waiting for the item to arrive.",
+   "violation_predicate": "agent does not record the number of days the customer has been waiting for the item to arrive",
+   "checkable": "yes (action + slot)",
+   "id": "P-100"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_due_amount",
+   "statement": "The agent must verify the customer's identity before proceeding with the subscription status inquiry.",
+   "violation_predicate": "agent does not verify customer's identity before proceeding",
+   "checkable": "yes (action + slot)",
+   "id": "P-101"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_due_amount",
+   "statement": "The agent must not adjust the subscription status information to make it unreasonable.",
+   "violation_predicate": "agent adjusts subscription status information",
+   "checkable": "yes (response content)",
+   "id": "P-102"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_due_amount",
+   "statement": "The agent must provide the customer with their account login details.",
+   "violation_predicate": "agent does not provide customer with account login details",
+   "checkable": "yes (action sequence)",
+   "id": "P-103"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "status_due_amount",
+   "statement": "The agent must offer to provide additional assistance before ending the conversation.",
+   "violation_predicate": "agent does not offer additional assistance before ending conversation",
+   "checkable": "yes (action sequence)",
+   "id": "P-104"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_pay_bill",
+   "statement": "The agent must enter the correct amount for the subscription payment.",
+   "violation_predicate": "agent does not enter correct amount for subscription payment",
+   "checkable": "yes (response content)",
+   "id": "P-105"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_pay_bill",
+   "statement": "The agent must ask for a credit card number if not provided by the customer.",
+   "violation_predicate": "agent does not ask for credit card number if not provided",
+   "checkable": "yes (action sequence)",
+   "id": "P-106"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_pay_bill",
+   "statement": "The agent must finalize the subscription payment using the correct action.",
+   "violation_predicate": "agent does not finalize subscription payment using correct action",
+   "checkable": "yes (action sequence)",
+   "id": "P-107"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_pay_bill",
+   "statement": "The agent must update the account correctly.",
+   "violation_predicate": "agent does not update account correctly",
+   "checkable": "yes (action sequence)",
+   "id": "P-108"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_pay_bill",
+   "statement": "The agent must provide the correct amount if the customer's desired amount is $0.",
+   "violation_predicate": "agent does not provide correct amount if customer's desired amount is $0",
+   "checkable": "yes (response content)",
+   "id": "P-109"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_extension",
+   "statement": "The agent must check the customer's membership level before determining if they are eligible for an extension.",
+   "violation_predicate": "agent does not check membership level before determining eligibility",
+   "checkable": "yes (action sequence)",
+   "id": "P-110"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_extension",
+   "statement": "The agent must inform the customer of their eligibility for an extension based on their membership level.",
+   "violation_predicate": "agent does not inform customer of eligibility",
+   "checkable": "yes (response content)",
+   "id": "P-111"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_extension",
+   "statement": "The agent must not extend a subscription for a customer who is not eligible without escalating the issue to a manager.",
+   "violation_predicate": "agent extends subscription without escalating to manager",
+   "checkable": "yes (action sequence)",
+   "id": "P-112"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_extension",
+   "statement": "The agent must escalate the issue to a manager if the customer is not eligible for an extension.",
+   "violation_predicate": "agent does not escalate issue to manager without customer's phone number",
+   "checkable": "yes (action + slot)",
+   "id": "P-113"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_extension",
+   "statement": "The agent must not inform the customer that a manager will call them back without having the customer's phone number.",
+   "violation_predicate": "agent informs customer of manager call without customer's phone number",
+   "checkable": "yes (response content)",
+   "id": "P-114"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_dispute_bill",
+   "statement": "The agent must check the customer's membership level before proceeding with the dispute bill inquiry.",
+   "violation_predicate": "agent does not check membership level",
+   "checkable": "yes (action sequence)",
+   "id": "P-115"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_dispute_bill",
+   "statement": "The agent must check the system before offering a refund to Bronze or Guest members.",
+   "violation_predicate": "agent does not check system",
+   "checkable": "yes (response content)",
+   "id": "P-116"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_dispute_bill",
+   "statement": "The agent must offer a refund amount that matches the difference between the billed and actual amounts.",
+   "violation_predicate": "agent does not offer correct refund amount",
+   "checkable": "yes (response content)",
+   "id": "P-117"
+  },
+  {
+   "category": "Subscription Inquiry",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "manage_dispute_bill",
+   "statement": "The agent must not offer a refund to a customer who has already paid the bill.",
+   "violation_predicate": "agent offers refund to customer who has already paid",
+   "checkable": "yes (response content)",
+   "id": "P-118"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "boots",
+   "statement": "The agent must direct the customer to the search FAQ feature when unsure about the answer to their question.",
+   "violation_predicate": "agent does not direct the customer to the search FAQ feature",
+   "checkable": "yes (action sequence)",
+   "id": "P-119"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "boots",
+   "statement": "The agent must select the correct Boots option from the provided list when the customer asks about Boots.",
+   "violation_predicate": "agent does not select the correct Boots option",
+   "checkable": "yes (action + slot)",
+   "id": "P-120"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "boots",
+   "statement": "The agent must choose the correct answer from the list of 8 options that best addresses the customer's question.",
+   "violation_predicate": "agent does not select the correct answer",
+   "checkable": "yes (response content)",
+   "id": "P-121"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "shirt",
+   "statement": "The agent must select the correct article of clothing from the list of options (Jeans, Shirt, Boots, Jacket) before proceeding.",
+   "violation_predicate": "agent does not select the correct article of clothing from the list of options (Jeans, Shirt, Boots, Jacket) before proceeding.",
+   "checkable": "yes (action sequence)",
+   "id": "P-122"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "jacket",
+   "statement": "The agent must read through the list of options before selecting the correct answer.",
+   "violation_predicate": "agent does not read through the list of options",
+   "checkable": "yes (action + slot)",
+   "id": "P-123"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "jacket",
+   "statement": "The agent must ensure the selected response includes all relevant information.",
+   "violation_predicate": "agent does not ensure the selected response includes all relevant information",
+   "checkable": "yes (response content)",
+   "id": "P-124"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "jacket",
+   "statement": "The agent must not copy/paste the system-generated response.",
+   "violation_predicate": "agent copies/pastes the system-generated response",
+   "checkable": "yes (response content)",
+   "id": "P-125"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "jacket",
+   "statement": "The agent must ensure they remember the customer's question before providing a response.",
+   "violation_predicate": "agent does not remember the customer's question",
+   "checkable": "yes (response content)",
+   "id": "P-126"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "jacket",
+   "statement": "The agent must not hide the FAQ section if they have not resolved the customer's question.",
+   "violation_predicate": "agent hides the FAQ section without resolving the customer's question",
+   "checkable": "yes (action sequence)",
+   "id": "P-127"
+  },
+  {
+   "category": "Single-Item Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "jacket",
+   "statement": "The agent must not select the incorrect article of clothing from the list if the customer has not asked about it.",
+   "violation_predicate": "agent selects the incorrect article of clothing from the list without the customer asking about it",
+   "checkable": "yes (action + slot)",
+   "id": "P-128"
+  },
+  {
+   "category": "Storewide Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "pricing",
+   "statement": "The agent must identify the correct pricing category for the customer's question.",
+   "violation_predicate": "agent does not select the correct pricing category",
+   "checkable": "yes (action + slot)",
+   "id": "P-129"
+  },
+  {
+   "category": "Storewide Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "timing",
+   "statement": "The agent must determine the category of the customer's question before selecting an answer.",
+   "violation_predicate": "agent does not determine the category of the customer's question before selecting an answer",
+   "checkable": "yes (action sequence)",
+   "id": "P-130"
+  },
+  {
+   "category": "Storewide Query",
+   "source": "ABCD-guidelines",
+   "origin_subflow": "policy",
+   "statement": "An agent must provide a natural language explanation of the automated system response.",
+   "violation_predicate": "agent does not provide a natural language explanation",
+   "checkable": "yes (response content)",
+   "id": "P-131"
+  },
+  {
+   "category": "Action ordering",
+   "source": "ABCD-ontology",
+   "origin_subflow": null,
+   "statement": "Before initiating a refund or offer-refund, the agent must first validate the customer's purchase.",
+   "violation_predicate": "refund_initiate OR refund_update OR refund_status",
+   "checkable": "yes (action + slot)",
+   "id": "P-132"
+  },
+  {
+   "category": "Action ordering",
+   "source": "ABCD-ontology",
+   "origin_subflow": null,
+   "statement": "Before initiating a refund or offer-refund, the agent must have verified the customer's identity.",
+   "violation_predicate": "refund_initiate OR refund_update OR refund_status",
+   "checkable": "yes (action sequence)",
+   "id": "P-133"
+  },
+  {
+   "category": "Action ordering",
+   "source": "ABCD-ontology",
+   "origin_subflow": null,
+   "statement": "Before initiating a refund or offer-refund, the agent must have obtained the customer's reason for requesting a refund.",
+   "violation_predicate": "refund_initiate OR refund_update OR refund_status",
+   "checkable": "yes (action sequence)",
+   "id": "P-134"
+  },
+  {
+   "category": "Action ordering",
+   "source": "ABCD-ontology",
+   "origin_subflow": null,
+   "statement": "Before initiating a refund or offer-refund, the agent must have obtained the customer's details.",
+   "violation_predicate": "refund_initiate OR refund_update OR refund_status",
+   "checkable": "yes (action sequence)",
+   "id": "P-135"
+  },
+  {
+   "category": "Action ordering",
+   "source": "ABCD-ontology",
+   "origin_subflow": null,
+   "statement": "Before initiating a refund or offer-refund, the agent must have obtained the customer's subscription status.",
+   "violation_predicate": "refund_initiate OR refund_update OR refund_status",
+   "checkable": "yes (action sequence)",
+   "id": "P-136"
+  },
+  {
+   "category": "Action ordering",
+   "source": "ABCD-ontology",
+   "origin_subflow": null,
+   "statement": "Before initiating a refund or offer-refund, the agent must have obtained the customer's shipping status.",
+   "violation_predicate": "refund_initiate OR refund_update OR refund_status",
+   "checkable": "yes (action sequence)",
+   "id": "P-137"
+  },
+  {
+   "category": "Action ordering",
+   "source": "ABCD-ontology",
+   "origin_subflow": null,
+   "statement": "Before initiating a refund or offer-refund, the agent must have obtained the customer's membership status.",
+   "violation_predicate": "refund_initiate OR refund_update OR refund_status",
+   "checkable": "yes (action sequence)",
+   "id": "P-138"
+  },
+  {
+   "category": "Action ordering",
+   "source": "ABCD-ontology",
+   "origin_subflow": null,
+   "statement": "Before initiating a refund or offer-refund, the agent must not have already offered a refund or promo code.",
+   "violation_predicate": "refund_initiate OR refund_update OR refund_status",
+   "checkable": "yes (response content)",
+   "id": "P-139"
+  },
+  {
+   "category": "Action ordering",
+   "source": "ABCD-ontology",
+   "origin_subflow": null,
+   "statement": "Refunds and offer-refunds are not allowed for purchases that have not been validated.",
+   "violation_predicate": "refund_initiate OR refund_update OR refund_status",
+   "checkable": "yes (response content)",
+   "id": "P-140"
+  },
+  {
+   "category": "Pharmaceuticals",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer must provide a valid prescription for all pharmaceuticals purchased in the store.",
+   "violation_predicate": "is_none or is_empty or contains_non prescription_drug",
+   "checkable": "yes (action + slot)",
+   "id": "P-141"
+  },
+  {
+   "category": "Pharmaceuticals",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer must be at least 18 years old to purchase any pharmaceuticals.",
+   "violation_predicate": "is_less_than 18",
+   "checkable": "yes (action + slot)",
+   "id": "P-142"
+  },
+  {
+   "category": "Pharmaceuticals",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer is limited to purchasing no more than 3 days' supply of any pharmaceutical.",
+   "violation_predicate": "is_greater_than_or_equal_to 3",
+   "checkable": "yes (action + slot)",
+   "id": "P-143"
+  },
+  {
+   "category": "Pharmaceuticals",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer must not purchase more than one quantity of a pharmaceutical at a time.",
+   "violation_predicate": "is_greater_than_one",
+   "checkable": "yes (action + slot)",
+   "id": "P-144"
+  },
+  {
+   "category": "Pharmaceuticals",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer must not purchase pharmaceuticals for minors.",
+   "violation_predicate": "contains_minor_purchaser",
+   "checkable": "yes (response content)",
+   "id": "P-145"
+  },
+  {
+   "category": "Pharmaceuticals",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer must not attempt to purchase pharmaceuticals without a valid prescription or other acceptable proof of medical need.",
+   "violation_predicate": "contains_non prescription_drug",
+   "checkable": "yes (action sequence)",
+   "id": "P-146"
+  },
+  {
+   "category": "Pharmaceuticals",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer must not attempt to purchase pharmaceuticals in bulk.",
+   "violation_predicate": "contains_bulk_purchaser",
+   "checkable": "yes (action sequence)",
+   "id": "P-147"
+  },
+  {
+   "category": "Groceries",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer is eligible for a refund on perishable groceries if they are not satisfied with their order.",
+   "violation_predicate": "order.contains(perishable_goods) and not customer.satisfied_with_order",
+   "checkable": "yes (action sequence)",
+   "id": "P-148"
+  },
+  {
+   "category": "Groceries",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer can request a substitution of an out-of-stock grocery item with a similar alternative.",
+   "violation_predicate": "item.is_out_of_stock and not substitution_request_requested",
+   "checkable": "yes (action + slot)",
+   "id": "P-149"
+  },
+  {
+   "category": "Groceries",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer must be at least 21 years old to purchase alcohol from the store.",
+   "violation_predicate": "customer.age < 21 and order.contains(alcohol)",
+   "checkable": "yes (response content)",
+   "id": "P-150"
+  },
+  {
+   "category": "Groceries",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer can request a delivery refund if the order is not delivered within the specified timeframe.",
+   "violation_predicate": "delivery_status != delivered_within_timeframe and not refund_request_requested",
+   "checkable": "yes (action sequence)",
+   "id": "P-151"
+  },
+  {
+   "category": "Groceries",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer can request a substitution of a grocery item if it is damaged or spoiled.",
+   "violation_predicate": "item.is_damaged_or_spoiled and not substitution_request_requested",
+   "checkable": "yes (action + slot)",
+   "id": "P-152"
+  },
+  {
+   "category": "Groceries",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer can request a delivery refund if the order is not delivered due to inclement weather.",
+   "violation_predicate": "weather_condition == inclement and delivery_status != delivered",
+   "checkable": "yes (response content)",
+   "id": "P-153"
+  },
+  {
+   "category": "Financial products",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer will be charged a store credit card interest rate of 24.99% APR.",
+   "violation_predicate": "is_store_credit_card_interest_rate",
+   "checkable": "yes (action + slot)",
+   "id": "P-154"
+  },
+  {
+   "category": "Financial products",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer will be charged a buy-now-pay-later interest rate of 30.99% APR.",
+   "violation_predicate": "is_buy_now_pay_later_interest_rate",
+   "checkable": "yes (action + slot)",
+   "id": "P-155"
+  },
+  {
+   "category": "Financial products",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer will be charged a gift card fee of 5% of the purchase amount.",
+   "violation_predicate": "is_gift_card_fee",
+   "checkable": "yes (response content)",
+   "id": "P-156"
+  },
+  {
+   "category": "Financial products",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "The customer will be eligible for protection plans if they have purchased within the last 30 days.",
+   "violation_predicate": "has_protection_plan_eligibility",
+   "checkable": "yes (action sequence)",
+   "id": "P-157"
+  },
+  {
+   "category": "Financial products",
+   "source": "authored",
+   "origin_subflow": null,
+   "statement": "I can provide financial product recommendations only to customers who have purchased within the last 30 days.",
+   "violation_predicate": "has_recent_purchase",
+   "checkable": "yes (action sequence)",
+   "id": "P-158"
+  }
+ ],
+ "dropped_failed_checks": [
+  {
+   "subflow": "refund_initiate",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "The agent must ask for the customer's full name or Account ID to pull up their account in the background.",
+    "violation_predicate": "agent does not ask for the customer's full name or Account ID before pulling up their account.",
+    "checkable": "yes (action + slot)"
+   }
+  },
+  {
+   "subflow": "status_quantity",
+   "reason": [
+    "checkable must be one of ['yes (action sequence)', 'yes (action + slot)', 'yes (response content)', 'partial']"
+   ],
+   "clause": {
+    "statement": "Agent must verify customer's identity before proceeding with the status quantity inquiry.",
+    "violation_predicate": "agent does not verify customer's identity",
+    "checkable": "yes (verify identity fields)"
+   }
+  },
+  {
+   "subflow": "status_quantity",
+   "reason": [
+    "checkable must be one of ['yes (action sequence)', 'yes (action + slot)', 'yes (response content)', 'partial']",
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "Agent must check the email confirmation of the order against the desired order quantity.",
+    "violation_predicate": "agent does not check email confirmation",
+    "checkable": "yes (email confirmation)"
+   }
+  },
+  {
+   "subflow": "status_quantity",
+   "reason": [
+    "checkable must be one of ['yes (action sequence)', 'yes (action + slot)', 'yes (response content)', 'partial']"
+   ],
+   "clause": {
+    "statement": "Agent must ensure the item has shipped before offering a refund.",
+    "violation_predicate": "agent offers refund without checking shipping status",
+    "checkable": "yes (shipping status)"
+   }
+  },
+  {
+   "subflow": "status_quantity",
+   "reason": [
+    "checkable must be one of ['yes (action sequence)', 'yes (action + slot)', 'yes (response content)', 'partial']"
+   ],
+   "clause": {
+    "statement": "Agent must obtain the cost of the item from the customer before offering a refund.",
+    "violation_predicate": "agent does not obtain item cost",
+    "checkable": "yes (item cost)"
+   }
+  },
+  {
+   "subflow": "status_quantity",
+   "reason": [
+    "checkable must be one of ['yes (action sequence)', 'yes (action + slot)', 'yes (response content)', 'partial']"
+   ],
+   "clause": {
+    "statement": "Agent must not offer a refund without checking the shipping status of the item.",
+    "violation_predicate": "agent offers refund without checking shipping status",
+    "checkable": "yes (shipping status)"
+   }
+  },
+  {
+   "subflow": "credit_card",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "Agent must instruct the customer to try entering their credit card information again.",
+    "violation_predicate": "agent does not instruct customer to try entering credit card information again",
+    "checkable": "yes (action + slot)"
+   }
+  },
+  {
+   "subflow": "credit_card",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "Agent must instruct the customer to log out of their account and log back in.",
+    "violation_predicate": "agent does not instruct customer to log out and log back in",
+    "checkable": "yes (action + slot)"
+   }
+  },
+  {
+   "subflow": "credit_card",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "Agent must have the customer check the expiration date of their credit card.",
+    "violation_predicate": "agent does not have customer check credit card expiration date",
+    "checkable": "yes (action sequence)"
+   }
+  },
+  {
+   "subflow": "credit_card",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "Agent must ask for the customer's credit card number.",
+    "violation_predicate": "agent does not ask for customer's credit card number",
+    "checkable": "yes (action + slot)"
+   }
+  },
+  {
+   "subflow": "credit_card",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "Agent must ask for the customer's credit card expiration date.",
+    "violation_predicate": "agent does not ask for customer's credit card expiration date",
+    "checkable": "yes (action + slot)"
+   }
+  },
+  {
+   "subflow": "credit_card",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "Agent must enter a phrase of brand and item into the form.",
+    "violation_predicate": "agent does not enter brand and item into form",
+    "checkable": "yes (response content)"
+   }
+  },
+  {
+   "subflow": "credit_card",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "Agent must instruct the customer to log out of their account and log back in if previous actions do not work.",
+    "violation_predicate": "agent does not instruct customer to log out and log back in if previous actions do not work",
+    "checkable": "yes (action sequence)"
+   }
+  },
+  {
+   "subflow": "shopping_cart",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "An agent must instruct the customer to refresh the page and add the item again.",
+    "violation_predicate": "agent does not instruct customer to refresh page and add item again",
+    "checkable": "yes (action sequence)"
+   }
+  },
+  {
+   "subflow": "shopping_cart",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "An agent must instruct the customer to log out of their account and log back in.",
+    "violation_predicate": "agent does not instruct customer to log out and log in",
+    "checkable": "yes (action sequence)"
+   }
+  },
+  {
+   "subflow": "shopping_cart",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "An agent must instruct the customer to check if the selected item is Out-of-Stock.",
+    "violation_predicate": "agent does not instruct customer to check for Out-of-Stock status",
+    "checkable": "yes (action + slot)"
+   }
+  },
+  {
+   "subflow": "shopping_cart",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "An agent must enter 'troubleshoot' into the form and choose the [Enter Details] option.",
+    "violation_predicate": "agent does not enter 'troubleshoot' into form or choose [Enter Details] option",
+    "checkable": "yes (response content)"
+   }
+  },
+  {
+   "subflow": "search_results",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "The agent must log the customer out of their account and log back in before attempting to troubleshoot the search issue.",
+    "violation_predicate": "agent does not log out of account and log back in before attempting to troubleshoot the search issue",
+    "checkable": "yes (action + slot)"
+   }
+  },
+  {
+   "subflow": "search_results",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "The agent must ask the customer what their original search item is before attempting to troubleshoot the search issue.",
+    "violation_predicate": "agent does not ask the customer what their original search item is before attempting to troubleshoot the search issue",
+    "checkable": "yes (action + slot)"
+   }
+  },
+  {
+   "subflow": "slow_speed",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "The agent must instruct the customer to log out of their account and log back in before attempting the [Log Out/In] option.",
+    "violation_predicate": "agent does not instruct customer to log out and log back in before using [Log Out/In] option",
+    "checkable": "yes (action + slot)"
+   }
+  },
+  {
+   "subflow": "slow_speed",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "The agent must ask the customer to close all other tabs on their browser and other programs before attempting the [Instructions] option.",
+    "violation_predicate": "agent does not ask customer to close all other tabs and programs before using [Instructions] option",
+    "checkable": "yes (response content)"
+   }
+  },
+  {
+   "subflow": "promo_code_invalid",
+   "reason": [
+    "checkable must be one of ['yes (action sequence)', 'yes (action + slot)', 'yes (response content)', 'partial']"
+   ],
+   "clause": {
+    "statement": "The agent must verify the customer's membership level before providing a promo code.",
+    "violation_predicate": "agent does not verify customer membership level",
+    "checkable": "yes (membership privileges)"
+   }
+  },
+  {
+   "subflow": "status",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "The agent must update the order if the Oracle says No.",
+    "violation_predicate": "agent does not update order if Oracle says No",
+    "checkable": "yes (action sequence)"
+   }
+  },
+  {
+   "subflow": "jacket",
+   "reason": [
+    "copies 6+ consecutive words from the guidelines; paraphrase in your own words"
+   ],
+   "clause": {
+    "statement": "The agent must select the correct answer for the customer's question.",
+    "violation_predicate": "agent does not select the correct answer for the customer's question",
+    "checkable": "yes (action + slot)"
+   }
+  }
+ ],
+ "dropped_duplicates": [
+  {
+   "dropped": "The agent must confirm the customer's valid purchase before proceeding.",
+   "kept": "Agent must verify the customer's purchase is valid before proceeding."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity before proceeding.",
+   "kept": "The agent must verify the customer's identity and purchase information."
+  },
+  {
+   "dropped": "The agent must determine the customer's membership level before proceeding.",
+   "kept": "Agent must confirm the customer's membership level before proceeding."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity before proceeding.",
+   "kept": "The agent must verify the customer's identity and purchase information."
+  },
+  {
+   "dropped": "The agent must check the customer's membership level before proceeding.",
+   "kept": "Agent must confirm the customer's membership level before proceeding."
+  },
+  {
+   "dropped": "The agent must verify that the customer has cleared their cookies before attempting to troubleshoot the search issue.",
+   "kept": "The agent must inform the customer of the steps to clear their cookies before attempting to troubleshoot the search issue."
+  },
+  {
+   "dropped": "The agent must update the customer's account to reinstate the lost service.",
+   "kept": "The agent must verify the customer's identity before reinstating the lost service."
+  },
+  {
+   "dropped": "The agent must obtain the customer's full name or account ID before proceeding.",
+   "kept": "The agent must get the customer's full name or account ID before proceeding."
+  },
+  {
+   "dropped": "The agent must ask for the customer's full name or account ID to pull up their account.",
+   "kept": "The agent must get the customer's full name or account ID before proceeding."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity using at least 3 of the provided identification items.",
+   "kept": "The agent must verify the customer's identity by collecting 3 out of 7 required items."
+  },
+  {
+   "dropped": "The agent must obtain the customer's full name or account ID before proceeding.",
+   "kept": "The agent must get the customer's full name or account ID before proceeding."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity.",
+   "kept": "The agent must verify the customer's identity and purchase information."
+  },
+  {
+   "dropped": "The agent must confirm the customer's valid order.",
+   "kept": "The agent must confirm the customer's order is valid and within the return window."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity before proceeding.",
+   "kept": "The agent must verify the customer's identity and purchase information."
+  },
+  {
+   "dropped": "The agent must confirm the customer has a valid order before proceeding.",
+   "kept": "The agent must confirm the customer's order is valid and within the return window."
+  },
+  {
+   "dropped": "The agent must check the customer's membership level before proceeding.",
+   "kept": "Agent must confirm the customer's membership level before proceeding."
+  },
+  {
+   "dropped": "The agent must obtain the customer's full name or account ID before proceeding.",
+   "kept": "The agent must get the customer's full name or account ID before proceeding."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity using the provided fields.",
+   "kept": "The agent must verify the customer's identity using the required fields."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity before providing the subscription status information.",
+   "kept": "The agent must verify the customer's identity before proceeding with the subscription status inquiry."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity using the provided fields.",
+   "kept": "The agent must verify the customer's identity using the required fields."
+  },
+  {
+   "dropped": "The agent must enter the correct action to finalize the subscription payment.",
+   "kept": "The agent must enter the correct amount for the subscription payment."
+  },
+  {
+   "dropped": "The agent must click the correct button to update the account.",
+   "kept": "The agent must update the account correctly."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity before proceeding with the subscription inquiry.",
+   "kept": "The agent must verify the customer's identity before proceeding with the subscription status inquiry."
+  },
+  {
+   "dropped": "The agent must not extend a subscription for a customer who has not provided their phone number without escalating the issue to a manager.",
+   "kept": "The agent must not extend a subscription for a customer who is not eligible without escalating the issue to a manager."
+  },
+  {
+   "dropped": "The agent must inform the customer that they are not eligible for an extension if their membership level does not allow it.",
+   "kept": "The agent must check the customer's membership level before determining if they are eligible for an extension."
+  },
+  {
+   "dropped": "The agent must not extend a subscription for a customer who has already been informed of their ineligibility.",
+   "kept": "The agent must not extend a subscription for a customer who is not eligible without escalating the issue to a manager."
+  },
+  {
+   "dropped": "The agent must verify the customer's identity before proceeding with the dispute bill inquiry.",
+   "kept": "The agent must verify the customer's identity before proceeding with the dispute resolution."
+  },
+  {
+   "dropped": "The agent must select the correct article of clothing from the options (Jeans, Shirt, Boots, or Jacket) when the customer asks about a specific item.",
+   "kept": "The agent must select the correct article of clothing from the list of options (Jeans, Shirt, Boots, Jacket) before proceeding."
+  },
+  {
+   "dropped": "The agent must select the correct article of clothing from the list before proceeding.",
+   "kept": "The agent must select the correct article of clothing from the list of options (Jeans, Shirt, Boots, Jacket) before proceeding."
+  },
+  {
+   "dropped": "When a customer's question can be answered by the FAQ, the agent must click the [Search FAQ] button.",
+   "kept": "The agent must direct the customer to the search FAQ feature when unsure about the answer to their question."
+  },
+  {
+   "dropped": "An agent must determine the category of the customer's question before providing an answer.",
+   "kept": "The agent must determine the category of the customer's question before selecting an answer."
+  },
+  {
+   "dropped": "An agent must select the correct answer from the list of options.",
+   "kept": "The agent must read through the list of options before selecting the correct answer."
+  },
+  {
+   "dropped": "Refunds and offer-refunds are not allowed for purchases that are not due for refund.",
+   "kept": "Refunds and offer-refunds are not allowed for purchases that have not been validated."
+  },
+  {
+   "dropped": "Refunds and offer-refunds are not allowed for purchases that have already been refunded.",
+   "kept": "Refunds and offer-refunds are not allowed for purchases that have not been validated."
+  },
+  {
+   "dropped": "Refunds and offer-refunds are not allowed for purchases that are not eligible for refund.",
+   "kept": "Refunds and offer-refunds are not allowed for purchases that have not been validated."
+  },
+  {
+   "dropped": "The customer will receive a protection plan quote if they have purchased within the last 30 days.",
+   "kept": "The customer will be eligible for protection plans if they have purchased within the last 30 days."
+  }
+ ]
+}

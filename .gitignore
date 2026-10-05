@@ -16,3 +16,9 @@ papers/ocr/
 *.fls
 *.fdb_latexmk
 .Rhistory
+data/abcd/abcd_v1.1.json
+.venv/
+# Pipeline working files (raw model attempts include rejected unsafe outputs)
+Llama/*_stdout.txt
+Llama/logs/
+Llama/cache/
