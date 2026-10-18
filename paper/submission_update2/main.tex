@@ -1,0 +1,632 @@
+\documentclass[sigconf,nonacm]{acmart}
+
+%% ---------------------------------------------------------------------------
+%% Course project report (not an ACM conference submission).
+%% `nonacm` drops ACM conference metadata, copyright block, and reference
+%% format. The page style is also reset after \maketitle (acmart re-applies its
+%% own header style there), so only a page number is printed.
+%% ---------------------------------------------------------------------------
+\setcopyright{none}
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+
+%% Allow a little extra inter-word stretch so long identifiers do not overrun
+%% the narrow two-column measure.
+\setlength{\emergencystretch}{1.5em}
+
+%% Ragged-right table columns (>{\raggedright\arraybackslash}p{...}).
+\usepackage{array}
+
+\begin{document}
+
+\title{Cart Before the Harm}
+\subtitle{Project Update 2: Complete Literature Review and Dataset Design}
+
+\author{Sohan Jayram Reddy Kadiri}
+\affiliation{%
+  \institution{Northeastern University}
+  \city{Seattle}
+  \state{WA}
+  \country{USA}}
+\email{kadiri.s@northeastern.edu}
+
+\author{Sanidhya Khandelwal}
+\affiliation{%
+  \institution{Northeastern University}
+  \city{Seattle}
+  \state{WA}
+  \country{USA}}
+
+\author{Rohan Raj}
+\affiliation{%
+  \institution{Northeastern University}
+  \city{Seattle}
+  \state{WA}
+  \country{USA}}
+
+\renewcommand{\shortauthors}{Kadiri, Khandelwal, and Raj}
+
+\begin{abstract}
+Commercial jailbreaks ask an LLM shopping assistant to break a business rule, such as granting an unauthorized discount, approving an ineligible refund, or skipping an age check. They share products, policies and vocabulary with legitimate shopping requests, so a benchmark built from unmatched data can be solved from surface wording alone. This second project update makes EcomSafe benchmark-first. We refine the problem and research questions around constructing and validating a policy-grounded benchmark before any detector is trained. We expand the literature review to ten peer-reviewed conference papers, each verified on an official proceedings page. We also describe the single-turn data-generation pipeline we have now implemented. It plans labels before generating text and grounds every prompt in domain policy text. For each commercial attack it generates a matched legitimate request about the same product and policy topic, and it adds legitimate boundary cases. Records then pass rule and near-duplicate filters and a blind judge from a different model family; rejected negatives are repaired, broken pairs are removed, and the data is split into leakage-safe groups and audited for lexical shortcuts. The current pilot, \texttt{pilot\_150}, contains 126 attacks, 126 matched negatives and 37 boundary cases. A grouped Naive Bayes audit still separates attacks from matched negatives with 0.905 accuracy, which shows that substantial lexical shortcuts remain. This is a dataset-quality warning, not detector performance. No human validation or detector experiments have been run yet. The next cycle focuses on human validation, shortcut reduction and simple detection baselines.
+\end{abstract}
+
+\keywords{LLM safety, jailbreak detection, benchmark construction, e-commerce, matched negatives, dataset artifacts}
+
+\maketitle
+%% acmart draws its running header from its own fancyhdr page style (and
+%% redefines `plain`), so define a neutral style: no header, page number only.
+\fancypagestyle{coursereport}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}}
+\pagestyle{coursereport}
+\thispagestyle{coursereport}
+\markboth{}{}
+
+\noindent\textbf{Project Repository:} \url{https://github.com/sohanreddyk/ecomsafe}\\
+The repository now contains:
+\begin{itemize}
+  \item active development commits;
+  \item the data-generation scripts (\texttt{data\_generation/});
+  \item versioned prompt templates, with rendered examples;
+  \item filtering, judging and validation code;
+  \item pilot run summaries with a small record sample;
+  \item an offline test suite.
+\end{itemize}
+
+%% ===========================================================================
+\section{Refined Problem Description and Research Questions}
+\label{sec:problem}
+
+\paragraph{Setting.}
+LLM-based shopping assistants work under business constraints: pricing logic, return and warranty policies, competitor-disclosure rules, and regulatory requirements such as age, identity or prescription checks~\cite{koshal2026cart}. A \emph{commercial jailbreak} is a request that tries to make the assistant break one of these rules. Typical goals are an unauthorized discount, a refund the customer is not eligible for, a judgment about a competitor, or bypassing a legal safeguard. The response can look harmless as text while still violating a business rule. General jailbreak benchmarks, which define harm mainly as objectionable content, therefore do not cover this setting~\cite{mazeika2024harmbench,chao2024jailbreakbench}.
+
+\paragraph{Why the benchmark comes first.}
+Commercial attacks and legitimate requests talk about the same products, prices, return windows and verification steps. An honest customer asking how a price match works and an attacker trying to invent one use much of the same vocabulary. If attack data is collected without matched legitimate counterparts, a classifier can separate the classes using topic words or stereotyped malicious phrasing (``ignore the policy'', ``make an exception''). Such a classifier would look accurate without recognizing intent. Prior work shows that surface-level dataset artifacts can inflate benchmark scores~\cite{gururangan2018annotation}. Our own pilot audit (Section~\ref{sec:shortcut}) shows that this risk is real for EcomSafe. A detector evaluated on such data would measure lexical cues rather than intent.
+
+\paragraph{Refined problem.}
+EcomSafe's immediate problem is to \emph{construct and validate a policy-grounded benchmark}. The benchmark pairs commercial jailbreaks with legitimate requests about the same product and policy, and adds legitimate boundary cases. Its labels must be reliable, and it must leave as few lexical shortcuts as possible. Once validated, it will support evaluation of lexical, contextual and representation-level detectors, followed by multi-turn trajectory detection. The project is staged accordingly:
+\begin{itemize}
+  \item \textbf{Phase 1 (current):} benchmark construction and validation.
+  \item \textbf{Phase 2 (planned):} single-turn detector evaluation, including hidden-state probes.
+  \item \textbf{Phase 3 (planned):} multi-turn generation and trajectory-aware early detection.
+\end{itemize}
+The original proposal's hidden-state probe and trajectory layer~\cite{koshal2026cart} remain part of the plan for Phases~2 and~3. Neither is implemented, and no detector experiments have been run.
+
+\paragraph{Research questions.}
+\begin{description}
+  \item[RQ1, benchmark validity.] Can policy-grounded synthetic generation, matched negatives, boundary cases, independent model judging and human validation produce reliable commercial-safety intent labels?
+  \item[RQ2, shortcut resistance.] To what extent can attacks and their matched legitimate requests be separated using surface lexical cues, and can improved generation reduce this separability?
+  \item[RQ3, detection.] Given a validated single-turn benchmark, how well do lexical, contextual and representation-level detectors generalize across held-out product domains, attack types and attack techniques?
+  \item[RQ4, multi-turn (Phase~3, future).] Once single-turn validity is established, does trajectory-level information improve early detection of multi-turn commercial jailbreaks?
+\end{description}
+RQ1 and RQ2 are the focus of the current and next cycle. RQ3 begins once a validated single-turn version is frozen. RQ4 depends on multi-turn generation, which has not been run.
+
+%% ===========================================================================
+\section{Background and Related Work}
+\label{sec:related}
+
+\subsection{Peer-Reviewed Literature}
+\label{sec:rw-core}
+
+Table~\ref{tab:core} lists the ten peer-reviewed conference papers that form our core review. Each venue was verified on an official proceedings page: ACL Anthology, PMLR, NeurIPS, ICLR or USENIX. arXiv-only work is not counted.
+
+\begin{table}[t]
+  \caption{The ten peer-reviewed conference papers in the core review.}
+  \label{tab:core}
+  \small
+  \begin{tabular}{p{0.25cm}p{4.15cm}p{2.85cm}}
+    \toprule
+    \textbf{\#} & \textbf{Paper} & \textbf{Venue} \\
+    \midrule
+    1 & Nakash et al.~\cite{nakash2025effective} & EMNLP 2025 \\
+    2 & Mazeika et al.~\cite{mazeika2024harmbench} (HarmBench) & ICML 2024 \\
+    3 & Chao et al.~\cite{chao2024jailbreakbench} (JailbreakBench) & NeurIPS 2024 D\&B \\
+    4 & Russinovich et al.~\cite{russinovich2025crescendo} (Crescendo) & USENIX Security 2025 \\
+    5 & Ren et al.~\cite{ren2025llms} (ActorBreaker) & ACL 2025 \\
+    6 & Arditi et al.~\cite{arditi2024refusal} & NeurIPS 2024 \\
+    7 & Yao et al.~\cite{yao2025taubench} ($\tau$-bench) & ICLR 2025 \\
+    8 & Jiang et al.~\cite{jiang2024wildteaming} (WildTeaming) & NeurIPS 2024 \\
+    9 & R{\"o}ttger et al.~\cite{rottger2024xstest} (XSTest) & NAACL 2024 \\
+    10 & Gururangan et al.~\cite{gururangan2018annotation} & NAACL 2018 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{1. Effective Red-Teaming of Policy-Adherent Agents~\cite{nakash2025effective}.}
+\textbf{Scope.} The paper studies agents that must follow strict policies, such as refund or cancellation rules, against users who try to manipulate them into breaking those policies for personal gain.
+\textbf{Methodology.} The authors propose CRAFT, a multi-agent red-teaming system that uses persuasion strategies tailored to the agent's policy. They also introduce tau-break, a benchmark built on $\tau$-bench that measures how well agents resist manipulation, and use it to compare CRAFT with conventional jailbreak methods and to evaluate simple defenses.
+\textbf{Critical Takeaway.} Policy-aware persuasion breaks policy-adherent agents more effectively than generic jailbreaks and the simple defenses tested are insufficient, so commercial-policy violations need their own evaluation.
+
+\paragraph{2. HarmBench~\cite{mazeika2024harmbench}.}
+\textbf{Scope.} HarmBench is a standardized framework for evaluating automated red-teaming attacks and the robustness of LLM refusals.
+\textbf{Methodology.} The authors specify the properties a red-teaming evaluation needs and build a behavior set and scoring pipeline that meet them. They use it to compare 18 red-teaming methods against 33 target LLMs and defenses, and propose an efficient adversarial-training defense.
+\textbf{Critical Takeaway.} Attack success rates cannot be compared across papers without a shared threat model, behavior set and judge.
+
+\paragraph{3. JailbreakBench~\cite{chao2024jailbreakbench}.}
+\textbf{Scope.} JailbreakBench addresses inconsistent and irreproducible jailbreak evaluation with an open benchmark.
+\textbf{Methodology.} The benchmark provides an evolving repository of jailbreak artifacts, a dataset of 100 misuse behaviors, a standardized evaluation framework with a defined threat model and scoring, and a public leaderboard.
+\textbf{Critical Takeaway.} Jailbreak results are credible only when prompts, code and scoring are released for others to reproduce.
+
+\paragraph{4. Crescendo~\cite{russinovich2025crescendo}.}
+\textbf{Scope.} The paper introduces Crescendo, a multi-turn jailbreak that opens with benign, abstract questions about a target task and escalates gradually until the model produces content it would refuse if asked directly.
+\textbf{Methodology.} The authors run Crescendo manually against ChatGPT, Gemini Pro and LLaMA variants. They then automate it as Crescendomation, which outperforms prior jailbreaks on an AdvBench subset by 29--61\% on GPT-4 and 49--71\% on Gemini-Pro.
+\textbf{Critical Takeaway.} Each turn looks benign on its own, so per-message filters struggle to detect gradual escalation even when the attack pattern is known.
+
+\paragraph{5. LLMs Know Their Vulnerabilities (ActorBreaker)~\cite{ren2025llms}.}
+\textbf{Scope.} The paper studies how shifting a harmful request toward semantically related but innocuous-looking topics can expose safety gaps in aligned LLMs across multiple turns.
+\textbf{Methodology.} The attack, ActorBreaker, draws on actor-network theory: it identifies ``actors'' (people, objects, concepts) linked to a harmful target and chains queries about them toward that target. The authors also build a multi-turn safety dataset for fine-tuning defenses.
+\textbf{Critical Takeaway.} An attack can reach a harmful target through related concepts instead of explicit phrasing, so defenses keyed to that phrasing miss it.
+
+\paragraph{6. Refusal Is Mediated by a Single Direction~\cite{arditi2024refusal}.}
+\textbf{Scope.} The paper shows that refusal in open-source chat models is mediated by a single direction in the residual stream: removing it disables refusal, and adding it induces refusal on harmless prompts.
+\textbf{Methodology.} The direction is extracted as the difference in mean activations between harmful and harmless instructions, and is tested causally through directional ablation and activation addition. A rank-one weight edit based on it yields a white-box jailbreak.
+\textbf{Critical Takeaway.} Safety behavior sits in a low-dimensional, fragile internal structure, which makes it easy to remove and also readable by probes.
+
+\paragraph{7. $\tau$-bench~\cite{yao2025taubench}.}
+\textbf{Scope.} $\tau$-bench evaluates language agents that talk with simulated users while following domain-specific policy guidelines and using API tools, in retail and airline customer-service domains.
+\textbf{Methodology.} An LM simulates the user. Success is judged by comparing the final database state with an annotated goal state, and a pass\^{}$k$ metric measures how reliably an agent succeeds across repeated trials.
+\textbf{Critical Takeaway.} Even strong function-calling agents follow domain rules inconsistently across repeated trials, so policy adherence must be measured directly instead of assumed.
+
+\paragraph{8. WildTeaming~\cite{jiang2024wildteaming}.}
+\textbf{Scope.} WildTeaming is an automatic red-teaming framework that mines in-the-wild user--chatbot interactions to discover jailbreak tactics and composes them into new adversarial attacks. The authors use it to build WildJailbreak, a large open safety-training dataset.
+\textbf{Methodology.} WildJailbreak contains two contrastive kinds of queries: harmful queries, both plain and adversarial, and benign queries that resemble harmful ones in form but carry no harmful intent. The authors train models on it and evaluate both safety and over-refusal.
+\textbf{Critical Takeaway.} A safety dataset needs benign counterparts that look adversarial in form, or a model can learn the surface form of an attack rather than its intent and over-refuse benign requests.
+
+\paragraph{9. XSTest~\cite{rottger2024xstest}.}
+\textbf{Scope.} XSTest is a test suite for exaggerated safety, where models refuse clearly safe prompts because they superficially resemble unsafe ones.
+\textbf{Methodology.} The suite pairs safe prompts from several prompt types (for example homonyms, figurative language and safe contexts) with contrasting unsafe prompts, and uses them to characterize refusal behavior across models.
+\textbf{Critical Takeaway.} Models refuse safe requests that share vocabulary with unsafe ones, so safety evaluation needs explicit near-boundary benign cases.
+
+\paragraph{10. Annotation Artifacts in NLI Data~\cite{gururangan2018annotation}.}
+\textbf{Scope.} The paper shows that crowd-sourced natural language inference datasets contain annotation artifacts: lexical and stylistic cues in the hypotheses that reveal the label without the premise.
+\textbf{Methodology.} The authors train a text classifier on hypotheses alone, find that it predicts the label far above chance, analyze the cue words involved, and re-evaluate models on the ``hard'' subset that the hypothesis-only classifier gets wrong.
+\textbf{Critical Takeaway.} When a classifier that sees only surface features succeeds, benchmark scores overstate understanding, so datasets should be audited and reported with such baselines.
+
+\paragraph{Recent supporting preprints (not counted).}
+The following arXiv preprints inform our design. None has a verified peer-reviewed venue, so none counts toward the ten.
+\begin{itemize}
+  \item \textbf{SIA}~\cite{zhai2026sia}: synthesizes safety-aware training data, including adversarial examples, for e-commerce search LLMs. It is the closest industrial evidence that e-commerce assistants face jailbreak and compliance risk, and it inspired our boundary cases.
+  \item \textbf{Organizational Control Layer}~\cite{shi2026ocl}: checks an agent's proposed economic actions against role, policy and economic constraints before they execute. It is a complementary, execution-time defense for price and refund governance.
+  \item \textbf{Multi-turn safety}~\cite{sheoran2026multiturnpsb,li2026state,zhou2024speak,guida2026cognitive}: Cognitive Firewall, MultiTurnPSB, State-Dependent Safety Failures and Speak Out of Turn. These motivated the Phase~3 extension in Update~1.
+\end{itemize}
+
+\subsection{Thematic Synthesis}
+\label{sec:rw-synthesis}
+
+\paragraph{Policy-adherent agent attacks.}
+$\tau$-bench establishes customer-service agents bound by written policies as an evaluation setting~\cite{yao2025taubench}. CRAFT and tau-break show that persuasion grounded in those policies breaks such agents more often than generic jailbreaks~\cite{nakash2025effective}. EcomSafe follows this line: every generated attack targets a specific written policy fragment of a fictional store. Unlike these works, EcomSafe studies detection of shopper intent at the request level rather than end-to-end agent compliance.
+
+\paragraph{Red-teaming benchmarks and reproducibility.}
+HarmBench and JailbreakBench argue that results need a fixed threat model, behavior set and judge, together with released artifacts~\cite{mazeika2024harmbench,chao2024jailbreakbench}. WildTeaming shows how to scale adversarial data while keeping it organized by tactic~\cite{jiang2024wildteaming}. EcomSafe applies these principles to data construction: a fixed taxonomy, versioned prompt templates, a recorded configuration for each run, per-stage rejection logs, and public generation code.
+
+\paragraph{Multi-turn attack dynamics.}
+Crescendo and ActorBreaker show that harmful goals can be reached through gradual escalation or through related topics, with each turn looking benign~\cite{russinovich2025crescendo,ren2025llms}. These results motivate Phase~3. They are also why Phase~1 is explicitly limited to single-turn requests: a single-turn benchmark cannot by itself measure escalation.
+
+\paragraph{False positives and benign counterparts.}
+XSTest shows that models over-refuse safe prompts that resemble unsafe ones~\cite{rottger2024xstest}. WildTeaming pairs harmful queries with benign queries of similar form~\cite{jiang2024wildteaming}. EcomSafe borrows both ideas: matched negatives mirror the form of each attack, and boundary cases probe over-blocking. In commerce, false positives have a direct business cost, because blocking an honest refund or price-match request harms a legitimate customer.
+
+\paragraph{Representation-level safety signals.}
+Arditi et al.\ show that refusal is mediated by a linearly readable direction~\cite{arditi2024refusal}. This motivates the Phase~2 hypothesis that a linear probe over hidden states can recover commercial intent. Matched negatives are what make that test meaningful, because a probe that separates attacks from matched negatives cannot rely on topic alone. The same work also notes that the signal is fragile under white-box manipulation.
+
+\paragraph{Dataset shortcuts and artifacts.}
+Gururangan et al.\ show that a surface-only classifier can expose artifacts that inflate benchmark scores~\cite{gururangan2018annotation}. EcomSafe builds this check into its pipeline: every run reports how well a lexical classifier separates attacks from matched negatives. A high score is treated as a defect in the data.
+
+\subsection{Refined Research Gap}
+\label{sec:rw-gap}
+
+Each ingredient of EcomSafe has precedent, and we do not claim otherwise:
+\begin{itemize}
+  \item general jailbreak and harmful-content benchmarks~\cite{mazeika2024harmbench,chao2024jailbreakbench};
+  \item red-teaming of policy-adherent agents~\cite{nakash2025effective,yao2025taubench};
+  \item multi-turn jailbreaks~\cite{russinovich2025crescendo,ren2025llms};
+  \item over-refusal and benign counterparts~\cite{rottger2024xstest,jiang2024wildteaming};
+  \item representation-level safety signals~\cite{arditi2024refusal};
+  \item artifact audits~\cite{gururangan2018annotation}.
+\end{itemize}
+Trajectory-aware detection and hidden-state probing are also not new. EcomSafe's contribution is at the intersection of these lines of work. It combines:
+\begin{itemize}
+  \item an explicit taxonomy of e-commerce business-rule violations;
+  \item attacks paired with legitimate requests about the same product and policy;
+  \item legitimate boundary cases;
+  \item held-out evaluation by product domain, attack type and technique;
+  \item a lexical shortcut audit as a standard quality check;
+  \item a planned extension to trajectory-aware detection.
+\end{itemize}
+Among the works we reviewed, none provides this combination for commercial safety.
+
+%% ===========================================================================
+\section{Dataset and Pre-processing}
+\label{sec:data}
+
+This section separates three things: the \emph{planned} full benchmark (Section~\ref{sec:original}), the \emph{implemented} single-turn pipeline (Sections~\ref{sec:pipeline}--\ref{sec:shortcut}), and the \emph{observed} pilot data (Section~\ref{sec:pilot}).
+
+\subsection{Original EcomSafeBench Design}
+\label{sec:original}
+
+The proposal specifies EcomSafeBench as 3,900 annotated conversations across five product verticals: electronics, pharmaceuticals, fashion, financial products and groceries~\cite{koshal2026cart}. Table~\ref{tab:planned} gives the planned subsets. The multi-turn subset uses three escalation patterns: linear, camouflaged and late spike. The planned evaluation covers:
+\begin{itemize}
+  \item ROC AUC per threat class;
+  \item early-detection rate (attacks caught before turn~5);
+  \item false-positive rate on benign dialogues;
+  \item per-turn latency.
+\end{itemize}
+\textbf{The full 3,900-conversation benchmark has not been constructed.} What exists is a single-turn generation and validation pipeline and small pilot datasets.
+
+\begin{table}[t]
+  \caption{Planned EcomSafeBench composition from the proposal~\cite{koshal2026cart}. This is a design target and has not been built.}
+  \label{tab:planned}
+  \small
+  \begin{tabular}{p{2.5cm}rp{3.6cm}}
+    \toprule
+    \textbf{Subset} & \textbf{Conv.} & \textbf{Content} \\
+    \midrule
+    Commercial jailbreaks & 1,300 & Instances of the five attack types \\
+    Multi-turn escalation & 1,100 & Linear, camouflaged, late spike \\
+    Benign / control & 1,500 & Customer-service and shopping dialogues \\
+    \midrule
+    Total & 3,900 & \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Implemented Single-Turn Data-Generation Pipeline}
+\label{sec:pipeline}
+
+The implemented pipeline is \texttt{ecomsafe\_datagen}, located in the repository's \texttt{data\_generation/} folder. It synthesizes Threat Class~1: single-turn commercial jailbreaks. Table~\ref{tab:pipeline} lists its stages.
+
+\paragraph{Shopper text only.}
+The generator writes only what the shopper types. It never writes an assistant reply or instructions for carrying out a violation. Each current record therefore contains exactly one shopper (user) message and no assistant turn.
+
+\paragraph{Labels before text.}
+For each record, \texttt{plans.py} fixes the labels before any text exists:
+\begin{itemize}
+  \item intent, severity, attack type and framing technique;
+  \item domain, product and the policy topic being targeted.
+\end{itemize}
+The language model only writes text that realizes this plan, so the ground truth comes from the design. The judge then checks whether the text matches it.
+
+\paragraph{Policy grounding.}
+\texttt{domains.py} defines a small fictional catalog for each of the five verticals, with no real brands. It also holds policy text by topic (pricing, returns, warranty, competitor, restricted) and weights that control how often each attack type is sampled in each domain. For example, regulatory bypass has weight~0 in fashion, so that pairing is never sampled. Every generation prompt includes the exact policy text that the attack targets.
+
+\paragraph{Models used in the pilots.}
+Both models are served by Groq:
+\begin{itemize}
+  \item \textbf{Generator:} \texttt{openai/gpt-oss-120b}, temperature 0.9, reasoning effort ``medium'', five variants per call.
+  \item \textbf{Judge:} \texttt{qwen/qwen3.8-27b}, a different model family, with reasoning disabled.
+\end{itemize}
+The code supports other backends, but none were used in the reported pilots. All LLM calls are cached, prompts are versioned (\texttt{st-v2.4} for the headline pilot), and each run records the exact configuration it used.
+
+\begin{table*}[t]
+  \caption{Implemented pipeline stages (\texttt{data\_generation/ecomsafe\_datagen/}).}
+  \label{tab:pipeline}
+  \small
+  \begin{tabular}{p{3.3cm}p{2.6cm}p{10.6cm}}
+    \toprule
+    \textbf{Stage} & \textbf{Module} & \textbf{Function} \\
+    \midrule
+    Label-first planning & \texttt{taxonomy.py}, \texttt{plans.py} & Fix intent, severity, attack type, technique, domain, product and policy topic before generation \\
+    Domain-policy grounding & \texttt{domains.py} & Fictional catalogs, policy text by topic, attack-type weights by domain \\
+    Attack generation & \texttt{prompts.py}, \texttt{generate.py} & Five variants per call; refusals detected and re-sampled \\
+    Matched negatives & \texttt{prompts.py}, \texttt{generate.py} & One legitimate counterpart per attack: same product and policy topic, mirrored form \\
+    Boundary cases & \texttt{prompts.py}, \texttt{generate.py} & Legitimate requests near a policy boundary \\
+    Rule filter & \texttt{quality.py} & Length (15--700 characters), refusal text, banned meta-words, label tokens \\
+    Near-duplicate filter & \texttt{quality.py} & MinHash, Jaccard $\geq 0.8$ on character 5-grams, applied within each class \\
+    Blind judge (+ repair) & \texttt{quality.py}, \texttt{pipeline.py} & Independent relabeling without the intended label; rejected matched negatives rewritten for up to 2 rounds \\
+    Pair integrity, trimming & \texttt{pipeline.py} & Drop records whose partner did not survive; trim attacks to target, stratified by domain $\times$ attack type \\
+    Splits & \texttt{splits.py} & Grouped 70/10/20 train/val/test; held-out domain, technique and attack type \\
+    Shortcut audit & \texttt{quality.py} & Grouped 5-fold Naive Bayes on unigrams and bigrams, attack vs.\ matched negative \\
+    Annotation tooling & \texttt{annotate.py} & Blind sample export; Cohen's $\kappa$ human vs.\ design and human vs.\ judge \\
+    Preflight & \texttt{preflight.py} & Config, key and model-family checks; live connectivity; optional smoke run with invariant checks \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\subsection{Threat Taxonomy and Labels}
+\label{sec:taxonomy}
+
+\paragraph{Attack types and intents.}
+Table~\ref{tab:taxonomy} lists the five commercial attack types and the shopper intent label each maps to. The mapping is many-to-one: price manipulation and policy bypass both map to PV. The four attack intents are:
+\begin{itemize}
+  \item \textbf{PV}, Policy Violation;
+  \item \textbf{CD}, Competitive Disclosure;
+  \item \textbf{FF}, Fraud Facilitation;
+  \item \textbf{RB}, Regulatory Breach.
+\end{itemize}
+Matched negatives and boundary cases carry the label \textbf{BENIGN}.
+
+\paragraph{Response labels.}
+\emph{Compliant Refusal} (CR) is \emph{not} a shopper intent. It belongs to a separate set of response labels (CR, COMPLIED, PARTIAL, HELPED) that describe how a target model responds. These labels will be assigned only after target-model responses are collected in Phase~2.
+
+\begin{table}[t]
+  \caption{Implemented commercial attack types (Threat Class~1).}
+  \label{tab:taxonomy}
+  \small
+  \begin{tabular}{>{\raggedright\arraybackslash}p{2.1cm}p{0.75cm}>{\raggedright\arraybackslash}p{4.05cm}}
+    \toprule
+    \textbf{Attack type} & \textbf{Intent} & \textbf{Policy topic: goal} \\
+    \midrule
+    Price manipulation & PV & Pricing: override prices, invent or stack discounts \\
+    Policy bypass & PV & Returns or warranty: an exception the shopper does not qualify for \\
+    Return fraud & FF & Returns: guidance on deceiving the store, such as false damage claims or avoiding detection \\
+    Competitor extraction & CD & Competitor: rival rankings, or internal margins and unannounced price changes \\
+    Regulatory bypass & RB & Restricted: skip age, ID, prescription or KYC checks, or obtain dosing beyond the label \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Techniques.}
+Each attack is wrapped in one of eight framing techniques:
+\begin{itemize}
+  \item \texttt{direct};
+  \item \texttt{persona\_override};
+  \item \texttt{authority\_claim};
+  \item \texttt{policy\_misquote};
+  \item \texttt{emotional\_appeal};
+  \item \texttt{coercion\_threat};
+  \item \texttt{hypothetical\_framing};
+  \item \texttt{instruction\_injection}.
+\end{itemize}
+Each technique also has a defined benign analogue, which matched negatives can reuse.
+
+\paragraph{Severity and risk target.}
+Severity runs from 0 (none) through 1 (probing) and 2 (clear but implicit) to 3 (explicit). Single-turn attacks are planned with severity 2 or 3 in a 50/50 mix, and benign records have severity~0. Each user turn stores
+\[
+  \textit{risk\_target} = w(\textit{intent}) \times s(\textit{severity}),
+\]
+with weights $w$: FF $=1.0$, RB $=0.8$, PV $=0.6$, CD $=0.4$, and severity scale $s$: $0, 0.33, 0.67, 1.0$.
+\begin{itemize}
+  \item The weights come from the proposal's per-turn risk equation (Eq.~1)~\cite{koshal2026cart}.
+  \item The severity scaling, and its use as a supervised per-turn target, is a new extension in our implementation.
+\end{itemize}
+
+\subsection{Matched Negatives and Boundary Cases}
+\label{sec:negatives}
+
+We use four record categories:
+\begin{itemize}
+  \item \textbf{Attack:} a shopper request intended to violate, or to help violate, a commercial policy.
+  \item \textbf{Matched negative:} a legitimate request paired on purpose with one attack. It concerns the same product and the same policy topic.
+  \item \textbf{Boundary case:} a legitimate request near a policy boundary, such as an honest price-match request or a return just outside the window. It is designed to test over-blocking.
+  \item \textbf{Benign/control:} the umbrella category for all legitimate records. Matched negatives and boundary cases are both BENIGN; neither is an attack.
+\end{itemize}
+
+\paragraph{How matched negatives are written.}
+The generator sees the attack text and writes a counterpart that mirrors its sentence form and reuses its harmless wording. In a configured share of pairs (0.8 in the headline pilot), the counterpart also keeps the attack's framing in a legitimate form. Examples are an accurate policy quotation instead of a misquote, or a real role mentioned for context.
+
+Per-type guards forbid the counterpart from keeping any part of the forbidden request, and prompts require it to replace any false claim about the policy. The aim is to make topic, vocabulary and framing poor predictors of the label, so that the classes differ mainly in intent. The pipeline does not yet achieve this aim (Section~\ref{sec:shortcut}).
+
+\subsection{Filtering, Judging, Repair, and Pair Integrity}
+\label{sec:qc}
+
+\paragraph{Deterministic filters.}
+The rule filter removes messages that are too short or too long (15--700 characters), contain refusal text, contain banned meta-words (for example ``jailbreak'' or ``dataset''), or leak label tokens.
+
+The near-duplicate filter uses MinHash locality-sensitive hashing with a Jaccard threshold of 0.8 on character 5-grams. It runs \emph{within} each class (attacks, matched negatives, boundary cases). An attack and its matched negative are similar by design, so neither is removed for resembling the other.
+
+\paragraph{Blind judge.}
+An independent judge from a different model family relabels each message. It sees:
+\begin{itemize}
+  \item the store domain;
+  \item the relevant policy text;
+  \item the message.
+\end{itemize}
+It never sees the intended label. It returns an intent, a severity, a realism flag, a confidence score and a short rationale. A record is accepted when:
+\begin{itemize}
+  \item the judge's intent matches the planned intent;
+  \item its confidence is at least 0.5;
+  \item it marks the message as realistic.
+\end{itemize}
+The configuration treats PV$\leftrightarrow$FF as an acceptable soft agreement. In the headline pilot, every accepted record had full agreement.
+
+\paragraph{Matched-negative repair.}
+If the judge rejects a matched negative whose attack was accepted, the negative is rewritten using the judge's rationale as feedback and judged again, for up to two rounds. This raises the number of complete pairs. It also creates a possible \emph{judge-conditioning bias}: repaired records are optimized to pass the same judge that later accepts them, so judge agreement is not independent evidence of their validity. Human validation is required to resolve this (Section~\ref{sec:plan-annotation}).
+
+\paragraph{Pair integrity and trimming.}
+With orphans disabled, an attack or matched negative is dropped if its partner did not survive. Attacks are then trimmed to the run's target, stratified by domain $\times$ attack type. The pipeline records each dropped record and the stage that dropped it, with one exception: trimmed records are not yet logged (Section~\ref{sec:limits}).
+
+\subsection{Splits and Shortcut Auditing}
+\label{sec:shortcut}
+
+\paragraph{Leakage-safe splits.}
+Records are split 70/10/20 into train, validation and test. The split unit is a connected component over two links:
+\begin{itemize}
+  \item \texttt{gen\_group}, which links the five variants produced by one generator call;
+  \item \texttt{pair\_id}, which links an attack to its matched negative.
+\end{itemize}
+Near-paraphrases and minimal pairs therefore never straddle partitions. Components are stratified by domain, attack type and record kind. Three held-out splits are configured for generalization (RQ3). In each, the held-out value goes entirely to test:
+\begin{itemize}
+  \item domain \texttt{groceries};
+  \item technique \texttt{instruction\_injection};
+  \item attack type \texttt{competitor\_extraction}.
+\end{itemize}
+
+\paragraph{Lexical shortcut audit.}
+Each run trains a multinomial Naive Bayes classifier on unigram and bigram features to separate attacks from matched negatives. Evaluation is 5-fold cross-validation grouped by \texttt{gen\_group}, and boundary cases are excluded. The classifier sees only surface wording. \textbf{High accuracy therefore indicates bad dataset quality}, because it means the classes can be told apart without understanding intent. The audit is a diagnostic of the data, not an EcomSafe detector, and its accuracy is not detection performance.
+
+\subsection{Current Pilot Dataset Statistics}
+\label{sec:pilot}
+
+Table~\ref{tab:pilots} summarizes the headline pilot, \texttt{pilot\_150} (prompt version \texttt{st-v2.4}, attack target 150), and the preceding iteration, \texttt{pilot\_v5} (\texttt{st-v2.3}, target 50). Both are pipeline pilots, not the final benchmark.
+
+\begin{table*}[t]
+  \caption{Observed pilot statistics. ``Lexical audit'' is grouped Naive Bayes accuracy on attack vs.\ matched negative; higher means more lexical shortcuts, so it is not detector accuracy.}
+  \label{tab:pilots}
+  \small
+  \begin{tabular}{lcccccccc}
+    \toprule
+    \textbf{Run} & \textbf{Generated} & \textbf{After judge} & \textbf{After pairing} & \textbf{Final} & \textbf{Attacks} & \textbf{Matched neg.} & \textbf{Boundary} & \textbf{Train/Val/Test} \\
+    \midrule
+    \texttt{pilot\_v5} & 155 & 149 & 144 & 114 & 50 & 50 & 14 & 81 / 12 / 21 \\
+    \texttt{pilot\_150} & 392 & 375 & 361 & 289 & 126 & 126 & 37 & 195 / 35 / 59 \\
+    \midrule
+    \multicolumn{9}{l}{Lexical audit: \texttt{pilot\_v5} 0.84 ($n=100$); \texttt{pilot\_150} 0.905 ($n=252$).} \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\paragraph{Funnel.}
+In \texttt{pilot\_150}, 392 messages were generated. None was removed by the rule or near-duplicate filters, which suggests these filters are permissive for the current prompts. After judging and repair, 375 remained. In total, 17 records were rejected for judge disagreement: 4 attacks, 10 matched negatives and 3 boundary cases. Pair integrity removed 14 orphans, and stratified trimming reduced the set to the final 289.
+
+\paragraph{Shortcut finding.}
+In \texttt{pilot\_150}, the grouped 5-fold multinomial Naive Bayes audit, using unigram and bigram features, separated attacks from matched negatives with 0.905 accuracy ($n=252$). The audit intentionally uses only surface lexical information. This result therefore indicates that substantial lexical shortcuts remain in the current pilot, and it motivates another iteration of matched-negative and attack phrasing. The most attack-indicative n-grams include \emph{exception}, \emph{bypass}, \emph{override}, \emph{competitor} and \emph{margin}. The most negative-indicative include \emph{price\_match}, \emph{catalog} and \emph{what\_verification}. Attacks still announce their intent with stereotyped words, while negatives fall back on stock information-seeking phrasing. The score was 0.84 on the smaller \texttt{pilot\_v5}, so the problem did not shrink as the pilot grew.
+
+\paragraph{Product verticals.}
+Table~\ref{tab:domains} breaks down \texttt{pilot\_150} by vertical. Coverage is uneven:
+\begin{itemize}
+  \item Fashion has only 9 attacks, and they cover only two attack types. Regulatory bypass is excluded there by design.
+  \item Financial products and groceries contain no return-fraud attacks.
+  \item Boundary cases range from 4 (pharmaceuticals) to 15 (groceries).
+\end{itemize}
+
+\begin{table}[t]
+  \caption{\texttt{pilot\_150} by product vertical. Attack-type columns count attacks. Matched negatives equal attacks in each vertical. Abbreviations: PM price manipulation, PB policy bypass, RF return fraud, CE competitor extraction, RBy regulatory bypass, Bd boundary cases.}
+  \label{tab:domains}
+  \small
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{lrrrrrrrr}
+    \toprule
+    \textbf{Vertical} & \textbf{PM} & \textbf{PB} & \textbf{RF} & \textbf{CE} & \textbf{RBy} & \textbf{Att.} & \textbf{Bd} & \textbf{Total} \\
+    \midrule
+    Electronics & 5 & 9 & 9 & 9 & 4 & 36 & 5 & 77 \\
+    Pharmaceuticals & 0 & 0 & 3 & 8 & 15 & 26 & 4 & 56 \\
+    Fashion & 0 & 0 & 4 & 5 & -- & 9 & 5 & 23 \\
+    Financial prod. & 5 & 10 & 0 & 0 & 8 & 23 & 8 & 54 \\
+    Groceries & 10 & 8 & 0 & 6 & 8 & 32 & 15 & 79 \\
+    \midrule
+    Total & 20 & 27 & 16 & 28 & 35 & 126 & 37 & 289 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Technique distribution.}
+All eight techniques appear among the \texttt{pilot\_150} attacks:
+\begin{itemize}
+  \item 28 \texttt{policy\_misquote};
+  \item 27 \texttt{hypothetical\_framing};
+  \item 23 \texttt{instruction\_injection};
+  \item 20 \texttt{coercion\_threat};
+  \item 10 \texttt{direct};
+  \item 7 \texttt{authority\_claim};
+  \item 7 \texttt{emotional\_appeal};
+  \item 4 \texttt{persona\_override}.
+\end{itemize}
+
+\paragraph{Turn lengths.}
+\begin{itemize}
+  \item \textbf{Current data:} every record has exactly one shopper turn and zero assistant turns. Messages average 32.0 words (median 31) in \texttt{pilot\_150}.
+  \item \textbf{Multi-turn scaffolding:} plan builders for linear, camouflaged and late-spike conversations, history-conditioned generation and per-turn judging are implemented. The configuration specifies 3--7 user turns, a 0.4/0.3/0.3 pattern mix and a target of 1,100 conversations, but multi-turn generation is disabled. \textbf{No multi-turn data has been generated.}
+  \item \textbf{Open design issue:} the proposal's early-detection metric counts attacks caught ``before turn~5'', yet the configured 3--7 turn range allows conversations shorter than five turns. We record this conflict for the next design iteration rather than resolving it here.
+\end{itemize}
+
+\paragraph{Organic data.}
+The pipeline can load real customer-service text from the Bitext and Twitter customer-support corpora as organic benign data, but both input paths are unset. \textbf{All pilot data is synthetic.}
+
+\subsection{Current Limitations}
+\label{sec:limits}
+
+\begin{itemize}
+  \item \textbf{Lexical shortcuts.} The 0.905 audit accuracy means the pilot is not yet usable for detector evaluation without further iteration.
+  \item \textbf{Generator refusals.} The generator often declines to write return-fraud and instruction-injection messages:
+    \begin{itemize}
+      \item \texttt{pilot\_150}: 22 of 26 return-fraud attempts and 11 of 16 instruction-injection attempts were refused, and six attack plans failed entirely.
+      \item \texttt{pilot\_v5}: the corresponding figures were 4 of 8 and 3 of 7.
+    \end{itemize}
+    These denominators count API attempts, including retries. They are not counts of unique or final records and should not be read as dataset percentages.
+  \item \textbf{Repair bias.} 47 of the 126 final matched negatives in \texttt{pilot\_150}, and 25 of 50 in \texttt{pilot\_v5}, were rewritten using feedback from the judge that then accepted them.
+  \item \textbf{No human validation yet.} The annotation tooling exists, but no annotation has been run. Agreement between two human annotators and scoring of the realism answers are not yet implemented.
+  \item \textbf{Single judge.} Generator and judge come from different model families, but agreement with one model judge is not human agreement.
+  \item \textbf{Coverage and scale.} The pilots are small, coverage across verticals and attack types is uneven, and the configured target of 1,000 attacks has not been attempted.
+  \item \textbf{Bookkeeping.} Records removed by trimming are not yet written to the rejection log.
+  \item \textbf{No multi-turn or organic data} (Section~\ref{sec:pilot}).
+\end{itemize}
+
+%% ===========================================================================
+\section{Plan for Next Weeks}
+\label{sec:plan}
+
+\begin{table*}[t]
+  \caption{Proposed task distribution for the next cycle: planned team workstreams. All workstreams are shared group work.}
+  \label{tab:team}
+  \small
+  \begin{tabular}{>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{7.6cm}>{\raggedright\arraybackslash}p{5.7cm}}
+    \toprule
+    \textbf{Workstream} & \textbf{Next-cycle tasks} & \textbf{Deliverable} \\
+    \midrule
+    Dataset validation & Annotation guidelines; independent human annotation of about 100 \texttt{pilot\_150} records by two annotators; human-vs-human agreement and realism scoring added to \texttt{annotate.py}; disagreement adjudication & Validated pilot labels with $\kappa$ (human--human, human--design, human--judge) and confusion matrices \\
+    Dataset refinement & Reduce lexical shortcuts; improve matched-negative wording; address return-fraud and instruction-injection refusals; balance vertical and attack-type coverage; log trimmed records & Frozen, versioned single-turn dataset with a lower lexical audit score \\
+    Probe baselines & Naive Bayes and TF-IDF logistic regression; sentence-embedding classifier; Llama-3.2-3B-Instruct hidden-state extraction; linear (logistic) probe & Baseline comparison on the grouped train/validation/test split \\
+    Generalization & Held-out domain, attack-type and technique evaluation; false-positive rate on boundary cases & Evaluation report (pilot-scale sanity checks) \\
+    Multi-turn preparation & Resolve the turn-length vs.\ ``before turn~5'' metric conflict; tune escalation prompts; plan benign multi-turn dialogues & Multi-turn generation plan \\
+    Documentation and reproducibility & Versioned configs, prompt templates and run reports in the repository; offline tests; report writing & Updated repository and next project update \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+The plan follows from the problems observed. Labels must be validated and shortcuts reduced before a single-turn version is frozen and scaled. Simple baselines are built in parallel on frozen pilot data, as sanity checks only.
+
+\subsection{Dataset Annotation and Validation}
+\label{sec:plan-annotation}
+
+\begin{enumerate}
+  \item \textbf{Annotation protocol.} Write labeling guidelines covering the PV/CD/FF/RB/BENIGN definitions, the PV-vs-FF and PV-vs-RB disambiguation rules, and realism. Draw a stratified sample of about 100 \texttt{pilot\_150} records. The sample should oversample repaired matched negatives and boundary cases.
+  \item \textbf{Independent annotation.} Two annotators label every item without seeing the design label or the judge label.
+  \item \textbf{Agreement metrics.} Add human-vs-human agreement (Cohen's $\kappa$) to \texttt{annotate.py}, and score the realism answers. Keep the existing human-vs-design and human-vs-judge $\kappa$ and confusion matrix.
+  \item \textbf{Adjudication.} Resolve disagreements by discussion and record the decisions. Report agreement separately for repaired negatives.
+  \item \textbf{Shortcut reduction.} Revise attack and matched-negative prompts so that attacks do not rely on stereotyped words and negatives do not fall back on stock questions. Add an attack-vs-boundary audit, and re-measure until the lexical audit falls substantially.
+  \item \textbf{Refusals and coverage.} Reduce return-fraud and instruction-injection refusals, and record per-record generator provenance. Rebalance vertical and attack-type coverage. Log records removed by trimming.
+  \item \textbf{Freeze and scale.} Freeze a validated single-turn version, then scale toward the configured target. Multi-turn generation is enabled only after this, once the turn-5 metric conflict is resolved.
+\end{enumerate}
+
+\subsection{Probe Baseline Implementation}
+\label{sec:plan-probe}
+
+Baselines are built from simple to complex. All of them run on frozen pilot data, and pilot-scale results will be reported only as sanity checks.
+\begin{enumerate}
+  \item A Naive Bayes lexical baseline, reusing the audit as a reference point.
+  \item TF-IDF logistic regression.
+  \item A sentence-embedding classifier.
+  \item Hidden-state extraction from Llama-3.2-3B-Instruct, the proposal's smaller target model~\cite{koshal2026cart}, on each shopper message.
+  \item A linear (logistic) probe on the extracted states.
+\end{enumerate}
+Each baseline will be evaluated on:
+\begin{itemize}
+  \item the grouped train/validation/test split;
+  \item the three held-out splits (domain, attack type, technique);
+  \item the false-positive rate on boundary cases.
+\end{itemize}
+No complex neural or trajectory detector will be built before these baselines exist.
+
+\subsection{Proposed Team Task Distribution}
+\label{sec:plan-team}
+
+Table~\ref{tab:team} gives the proposed task distribution for the next cycle as planned team workstreams. All workstreams are shared group work, and the table is a plan, not a record of past work.
+
+
+%% ===========================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+Update~2 moves EcomSafe from a proposed benchmark to an implemented single-turn pipeline for constructing it. The pipeline:
+\begin{itemize}
+  \item plans labels before generating text;
+  \item grounds every request in written store policy;
+  \item pairs each commercial attack with a matched legitimate request and adds boundary cases;
+  \item applies deterministic filters, a blind judge from a different model family, repair and pair integrity;
+  \item produces leakage-safe grouped and held-out splits;
+  \item audits each run for lexical shortcuts.
+\end{itemize}
+We also expanded the related work to ten verified peer-reviewed papers and narrowed the research gap to their intersection.
+
+The pipeline works end to end. However, the 0.905 lexical audit on \texttt{pilot\_150}, together with generator refusals, possible repair bias and the absence of human validation, shows that the data is not yet ready to be treated as a final benchmark. The next cycle focuses on human validation, shortcut reduction and freezing a single-turn benchmark, while simple lexical, embedding and hidden-state baselines are established. Multi-turn trajectory experiments follow after that.
+
+\begin{acks}
+We thank Jayash Koshal and Shanu Sushmita of Northeastern University
+for their guidance and feedback throughout the EcomSafe project.
+\end{acks}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}
