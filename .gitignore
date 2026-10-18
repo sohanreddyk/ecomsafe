@@ -16,3 +16,10 @@ papers/ocr/
 *.fls
 *.fdb_latexmk
 .Rhistory
+.venv/
+
+# Secrets and generator run outputs (also covered by data_generation/.gitignore)
+.env
+**/.env
+data_generation/runs/
+*.sqlite
