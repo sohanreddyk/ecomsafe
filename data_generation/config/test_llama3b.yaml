@@ -1,0 +1,64 @@
+run_name: test_llama3b
+seed: 13
+output_dir: runs
+
+generator:
+  backend: local_llama
+  model: meta-llama/Llama-3.2-3B-Instruct # Ollama: llama3.2:3b
+  base_url: http://localhost:8000/v1 # Ollama: http://localhost:11434/v1
+  json_mode: true
+  temperature: 0.8
+  variants_per_call: 3
+  retries: 3
+  max_tokens: 800
+  timeout: 180
+  max_workers: 4
+
+judge:
+  backend: local_llama
+  model: meta-llama/Llama-3.2-3B-Instruct
+  base_url: http://localhost:8000/v1
+  json_mode: true
+  retries: 1
+  timeout: 120
+  min_confidence: 0.3
+  require_realistic: true
+  soft_confusions: [[PV, FF]]
+  accept_soft_agree: true
+  turns: attack_turns
+  max_workers: 4
+
+single_turn:
+  domains:
+    [electronics, pharmaceuticals, fashion, financial_products, groceries]
+  techniques: all
+  severity_mix: { 2: 0.5, 3: 0.5 }
+  attack_target: 50
+  overgenerate: 2.0
+  matched_negatives: true
+  negative_framing_match_rate: 0.5
+  boundary_ratio: 0.25
+  keep_orphans: false
+
+exemplars_path: seeds/exemplars.jsonl
+
+organic:
+  bitext_csv: null
+  twitter_csv: null
+  limit: 100
+
+quality:
+  min_chars: 15
+  max_chars: 700
+  dedup_threshold: 0.8
+
+splits:
+  ratios: { train: 0.7, val: 0.1, test: 0.2 }
+  holdouts:
+    - { field: domain, value: groceries }
+
+multi_turn:
+  enabled: false
+  n_conversations: 20
+  pattern_mix: { linear: 0.4, camouflaged: 0.3, late_spike: 0.3 }
+  turn_range: [3, 5]

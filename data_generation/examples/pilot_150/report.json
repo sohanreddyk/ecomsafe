@@ -1,0 +1,190 @@
+{
+  "run_name": "pilot_150",
+  "schema_version": "1.0",
+  "prompt_version": "st-v2.4",
+  "generator": "openai/gpt-oss-120b",
+  "judge": "qwen/qwen3.8-27b",
+  "warnings": [],
+  "funnel": [
+    [
+      "generated",
+      392
+    ],
+    [
+      "after rule filter",
+      392
+    ],
+    [
+      "after near-dup filter",
+      392
+    ],
+    [
+      "after blind judge (+repair)",
+      375
+    ],
+    [
+      "after pair integrity",
+      361
+    ],
+    [
+      "after stratified trim",
+      289
+    ]
+  ],
+  "generation_errors": {
+    "attacks:generator_refusal": 6
+  },
+  "refusal_rates": {
+    "by_attack_type": {
+      "competitor_extraction": "0/10 (0%)",
+      "policy_bypass": "0/7 (0%)",
+      "price_manipulation": "0/4 (0%)",
+      "regulatory_bypass": "0/11 (0%)",
+      "return_fraud": "22/26 (85%)"
+    },
+    "by_technique": {
+      "authority_claim": "3/6 (50%)",
+      "coercion_threat": "1/6 (17%)",
+      "direct": "0/3 (0%)",
+      "emotional_appeal": "3/5 (60%)",
+      "hypothetical_framing": "1/8 (12%)",
+      "instruction_injection": "11/16 (69%)",
+      "persona_override": "0/3 (0%)",
+      "policy_misquote": "3/11 (27%)"
+    }
+  },
+  "negative_repair": {
+    "attempted": 91,
+    "fixed": 63
+  },
+  "rejections": {
+    "judge:disagree": 17,
+    "pairing:pair_orphan": 14
+  },
+  "by_class": {
+    "attack": 126,
+    "benign/matched": 126,
+    "benign/boundary": 37
+  },
+  "by_domain": {
+    "financial_products": 54,
+    "groceries": 79,
+    "pharmaceuticals": 56,
+    "electronics": 77,
+    "fashion": 23
+  },
+  "attack_domain_x_type": {
+    "financial_products": {
+      "regulatory_bypass": 8,
+      "policy_bypass": 10,
+      "price_manipulation": 5
+    },
+    "groceries": {
+      "price_manipulation": 10,
+      "policy_bypass": 8,
+      "competitor_extraction": 6,
+      "regulatory_bypass": 8
+    },
+    "pharmaceuticals": {
+      "competitor_extraction": 8,
+      "regulatory_bypass": 15,
+      "return_fraud": 3
+    },
+    "electronics": {
+      "policy_bypass": 9,
+      "competitor_extraction": 9,
+      "regulatory_bypass": 4,
+      "price_manipulation": 5,
+      "return_fraud": 9
+    },
+    "fashion": {
+      "competitor_extraction": 5,
+      "return_fraud": 4
+    }
+  },
+  "attack_by_technique": {
+    "hypothetical_framing": 27,
+    "authority_claim": 7,
+    "policy_misquote": 28,
+    "instruction_injection": 23,
+    "emotional_appeal": 7,
+    "direct": 10,
+    "coercion_threat": 20,
+    "persona_override": 4
+  },
+  "judge_verdicts_kept": {
+    "agree": 289
+  },
+  "words_per_message": {
+    "mean": 32.0,
+    "median": 31
+  },
+  "splits": {
+    "train": 195,
+    "val": 35,
+    "test": 59
+  },
+  "shortcut_audit": {
+    "n": 252,
+    "grouped_cv_accuracy": 0.9048,
+    "interpretation": "HIGH lexical separability: inspect top n-grams and regenerate negatives to mirror them",
+    "accuracy_by_technique": {
+      "authority_claim": 0.9091,
+      "coercion_threat": 0.9714,
+      "direct": 0.875,
+      "emotional_appeal": 0.9091,
+      "hypothetical_framing": 0.92,
+      "instruction_injection": 0.8696,
+      "persona_override": 1.0,
+      "policy_misquote": 0.8824
+    },
+    "top_attack_ngrams": [
+      "make",
+      "exception",
+      "an_exception",
+      "competitor",
+      "margin",
+      "and_give",
+      "though",
+      "even_though",
+      "bypass",
+      "online",
+      "you_make",
+      "override",
+      "bypass_the",
+      "cost",
+      "ignore_the",
+      "make_an",
+      "waive",
+      "exception_and",
+      "without",
+      "avoid_the"
+    ],
+    "top_negative_ngrams": [
+      "price_match",
+      "your_catalog",
+      "me_what",
+      "what_verification",
+      "in_your",
+      "know_how",
+      "current",
+      "is_required",
+      "catalog",
+      "i_will",
+      "what_the",
+      "options",
+      "within_the",
+      "according",
+      "according_to",
+      "you_explain",
+      "required",
+      "under_the",
+      "request_a",
+      "under"
+    ]
+  },
+  "cache": {
+    "hits": 103,
+    "misses": 90
+  }
+}
