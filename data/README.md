@@ -1,21 +1,18 @@
 # data/
 
-EcomSafeBench data is not stored in this folder. The canonical workflow for generating it is [`../data_generation/`](../data_generation/).
+**Scaffold for upcoming implementation. No dataset has been committed yet.**
 
-## Where EcomSafeBench lives
+This directory will hold EcomSafeBench, the planned benchmark of commercial-jailbreak and benign shopping conversations.
 
-- **Generation and validation code:** `../data_generation/` (`ecomsafe_datagen`).
-- **Current pilots:** these are synthetic and come from `ecomsafe_datagen`. Full generated pilot outputs are **not** committed. Run reports for `pilot_150` (headline) and `pilot_v5` (comparison), plus a 24-record sample, are in `../data_generation/examples/`.
-- **Full benchmark:** the full 3,900-conversation EcomSafeBench (1,300 commercial jailbreaks, 1,100 multi-turn escalations, 1,500 benign/control) is still planned. The pilots so far are single-turn only.
+**Plan:**
+1. **Pilot first:** about 150 conversations (50 commercial jailbreaks, 40 multi-turn escalations, 60 benign) across all five product domains: electronics, pharmaceuticals, fashion, financial products, and groceries.
+2. **Full benchmark later:** the planned design is 3,900 annotated conversations (1,300 commercial jailbreaks, 1,100 multi-turn escalations, 1,500 benign/control).
 
-## Labels
+**Planned structure:** each conversation carries two levels of labels, validated against the annotation schema (to be added):
+- **Conversation level:** domain, benign/control status, attack type, and escalation pattern.
+- **Turn level:** intent labels (PV/CD/FF/RB/CR).
 
-- **Record format:** each generated record is a `Conversation` (`data_generation/ecomsafe_datagen/schema.py`).
-- **Request intent labels** for shopper messages: PV, CD, FF, RB and BENIGN.
-- **Response labels** (`ResponseLabel`): CR (Compliant Refusal), COMPLIED, PARTIAL and HELPED. They are response-side labels, assigned only after target-model responses are collected.
-
-## Do not commit
-
-- copyrighted papers or other third-party documents without a compatible licence;
-- API keys, `.env` files, or LLM caches;
-- bulk raw model outputs or unreviewed generated artifacts.
+**Do not commit:**
+- copyrighted source papers or other third-party documents;
+- sensitive, personal, or unreviewed generated artifacts;
+- large raw model outputs.

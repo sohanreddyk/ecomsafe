@@ -16,10 +16,9 @@ papers/ocr/
 *.fls
 *.fdb_latexmk
 .Rhistory
+data/abcd/abcd_v1.1.json
 .venv/
-
-# Secrets and generator run outputs (also covered by data_generation/.gitignore)
-.env
-**/.env
-data_generation/runs/
-*.sqlite
+# Pipeline working files (raw model attempts include rejected unsafe outputs)
+Llama/*_stdout.txt
+Llama/logs/
+Llama/cache/
